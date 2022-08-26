@@ -129,7 +129,7 @@ export const Condition = mobxReact.observer(() => {
       {editing && (
         <Dropdown
           label={({ ref, toggle }) => (
-            <Button ref={ref} className="condition_button" onClick={toggle}>镶嵌计算</Button>
+            <Button ref={ref} className="condition_button" onClick={toggle}>最优镶嵌</Button>
           )}
           popper={BisCalculatorPanel}
           placement="bottom-start"

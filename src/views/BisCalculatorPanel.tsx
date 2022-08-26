@@ -21,7 +21,7 @@ export const BisCalculatorPanel = mobxReact.observer(() => {
     <div className="setting card">
       <div className='setting_section'>
         {/* <span className="setting_sub">从当前范围内寻找每威力伤害期望最高的配置。例如计算6.2开荒装备，推荐筛选范围为610-615（HQ+普通难度+极神武器），额外点数装备推荐预先选择好，然后勾选保留已选择内容进行计算。</span> */}
-        <span className="setting_title">计算每威力伤害期望最高的镶嵌方案</span>
+        <span className="setting_title">计算当前装备下每威力伤害期望最高的镶嵌方案</span>
       </div>
       <div className="setting_section">
         <span className="setting_title">期望GCD</span>
@@ -32,6 +32,7 @@ export const BisCalculatorPanel = mobxReact.observer(() => {
       </div>
       <div className="setting_section">
         <span className="setting_title">优先使用食物提供技速/咏速</span>
+        <span className="setting_sub">不建议开启，会影响最优方案选择</span>
       </div>
       <div className="setting_controls">
         <Radio

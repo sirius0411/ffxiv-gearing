@@ -28,7 +28,7 @@ export const Store = mst.types
     equippedGears: mst.types.map(GearUnionReference),
     // bis calculator
     bisExpectedGcd: mst.types.optional(mst.types.number, 250),
-    bisFoodForSpeed: mst.types.optional(mst.types.boolean, true),
+    bisFoodForSpeed: mst.types.optional(mst.types.boolean, false),
     // bisKeepCurrent: mst.types.optional(mst.types.boolean, true),
     // bisUseOrnate: mst.types.optional(mst.types.boolean, false),
   })
@@ -436,13 +436,31 @@ export const Store = mst.types
        * 则会先贪心选择包含技速的食物再进行镶嵌计算
        */
 
+      const start = Date.now()
+
       // 清除食物
       const food = self.equippedGears.get('-1')
       if (food) {
         self.equip(food)
       }
 
-      let currentScore = self.equippedEffects?.damage || 0
+      const gradedMaterias = new Map<G.MateriaGrade, IMateria[]>()
+      for (const gear of self.equippedGears.values()) {
+        if (!gear?.isFood) {
+          gear?.materias.forEach(materia => {
+            // 清除宝石
+            if (materia.stat) {
+              materia.meld(undefined)
+            }
+            const grade = materia.meldableGrades[0]
+            let list = gradedMaterias.get(grade) || []
+            list.push(materia)
+            gradedMaterias.set(grade, list)
+          })
+        }
+      }
+
+      let currentScore = 0
 
       const foods = self.groupedGears[-1]
       let currentFood: IGearUnion | undefined = undefined
@@ -471,140 +489,209 @@ export const Store = mst.types
         }
       }
 
-      const gradedMaterias = new Map<G.MateriaGrade, IMateria[]>()
-      for (const gear of self.equippedGears.values()) {
-        if (!gear?.isFood) {
-          gear?.materias.forEach(materia => {
-            const grade = materia.meldableGrades[0]
-            let list = gradedMaterias.get(grade) || []
-            list.push(materia)
-            gradedMaterias.set(grade, list)
-          })
-        }
-      }
-
       // fill with max speed materias
       const speedStat: G.Stat = self.schema.stats.indexOf('SKS') === -1 ? 'SPS' : 'SKS'
+      // console.log('speed stat', speedStat)
       for (const entry of gradedMaterias.entries()) {
         entry[1].forEach(m => {
           m.meld(speedStat, entry[0])
         })
       }
 
+      // let counter = 0
+
+      const findBest = () => {
+        G.materiaGrades.forEach(grade => {
+          const materias = gradedMaterias.get(grade)
+          if (!materias) {
+            return
+          }
+          materias.forEach(materia => {
+            let currentStat: G.Stat | undefined = undefined
+            self.schema.stats.forEach(stat => {
+              if (stat in G.materias && stat != speedStat) {
+                currentStat = materia.stat
+                materia.meld(stat, grade)
+                const currentEffects = self.equippedEffects!
+                // console.log('now', currentEffects.damage, currentEffects.gcd, 'best', currentScore)
+                if (currentEffects.damage >= currentScore && floor(currentEffects.gcd * 100) <= self.bisExpectedGcd) {
+                  currentScore = currentEffects.damage
+                } else {
+                  materia.meld(currentStat, grade)
+                }
+                // counter++
+              }
+            })
+          })
+        })
+
+        if (!self.equippedGears.get('-1')) {
+          let currentFood: IFood | undefined = undefined
+          foods.forEach(food => {
+            if (food.isFood) {
+              if (!currentFood) {
+                currentFood = food
+              }
+              self.equip(food)
+              const currentEffects = self.equippedEffects!
+              if (currentEffects.damage > currentScore && floor(currentEffects.gcd * 100) <= self.bisExpectedGcd) {
+                currentScore = currentEffects.damage
+                currentFood = food
+              } else {
+                self.equip(currentFood)
+              }
+              // counter++
+            }
+          })
+        }
+      }
+
+      for (let i = 0; i < 2; i++) {
+        // 第二次处理属性溢出的宝石
+        findBest()
+      }
+
+      // 处理属性陷阱，寻找是否存在更优属性平行替换方案
+      type MeldItem = {
+        stat: G.Stat | undefined;
+        grade: G.MateriaGrade | undefined;
+      }
+      let currentBestSet: MeldItem[] = []
+      let currentBestScore = currentScore
+      let newBestSet: MeldItem[] = []
+      let newBestScore = currentScore
+      // save current set
       G.materiaGrades.forEach(grade => {
         const materias = gradedMaterias.get(grade)
         if (!materias) {
           return
         }
         materias.forEach(materia => {
-          let currentStat: G.Stat | undefined = undefined
-          self.schema.stats.forEach(stat => {
-            if (stat in G.materias && stat != speedStat) {
-              currentStat = materia.stat
-              materia.meld(stat, grade)
-              const currentEffects = self.equippedEffects!
-              console.log('now', currentEffects.damage, currentEffects.gcd, 'best', currentScore)
-              if (currentEffects.damage >= currentScore && currentEffects.gcd * 100 <= self.bisExpectedGcd) {
-                currentScore = currentEffects.damage
-              } else {
-                materia.meld(currentStat, grade)
-              }
-            }
+          currentBestSet.push({
+            stat: materia.stat,
+            grade: materia.grade,
           })
         })
       })
+      const restoreCurrentSet = () => {
+        let index = 0
+        G.materiaGrades.forEach(grade => {
+          const materias = gradedMaterias.get(grade)
+          if (!materias) {
+            return
+          }
+          materias.forEach(materia => {
+            materia.meld(currentBestSet[index].stat, currentBestSet[index].grade)
+            index++
+          })
+        })
+      }
+      // find for better plans moving one to another
+      const findInGrade = (grade: G.MateriaGrade, from: G.Stat, tos: G.Stat[]) => {
+        const materias = gradedMaterias.get(grade)
+        if (!materias) {
+          return
+        }
+        materias.forEach(materia => {
+          if (materia.stat === from) {
+            tos.forEach(to => {
+              const space = (materia.gear.currentMeldableStats[to] || 0)
+              const amount = (G.materias[to]?.[grade-1] || 0)
+              // console.log(from, to, 'space', space, 'amount', amount)
+              if (space > amount) {
+                materia.meld(to, grade)
+                const score = self.equippedEffects!.damage
+                // console.log(score, newBestScore)
+                if (score > newBestScore) {
+                  // console.log('new best set', from, to)
+                  newBestSet = []
+                  G.materiaGrades.forEach(grade => {
+                    const materias = gradedMaterias.get(grade)
+                    if (!materias) {
+                      return
+                    }
+                    materias.forEach(materia => {
+                      newBestSet.push({
+                        stat: materia.stat,
+                        grade: materia.grade,
+                      })
+                    })
+                  })
+                  newBestScore = score
+                } else {
+                  if (grade - 1 > 0) {
+                    const lowerGrade = (grade - 1) as G.MateriaGrade
+                    const snapshot: MeldItem[] | undefined = gradedMaterias.get(lowerGrade)?.map(v => ({
+                      stat: v.stat,
+                      grade: v.grade
+                    }))
+                    if (snapshot) {
+                      findInGrade(lowerGrade, from, tos)
+                      // restore lower grade
+                      let index = 0
+                      gradedMaterias.get(lowerGrade)?.forEach(i => {
+                        i.meld(snapshot[index].stat, snapshot[index].grade)
+                      })
+                    }
+                  }
+                }
+              }
+            })
+          }
+        })
+      }
+      for (const grade of G.materiaGrades) {
+        if (gradedMaterias.has(grade)) {
+          // console.log('finding in grade', grade)
+          findInGrade(grade, 'DHT', ['DET', 'CRT'])
+          restoreCurrentSet()
+          findInGrade(grade, 'DET', ['DHT', 'CRT'])
+          restoreCurrentSet()
+          findInGrade(grade, 'CRT', ['DHT', 'DET'])
+          break
+        }
+      }
 
-      // let currentGears = new Map<number, IGearUnion>()
-      // let maxScore = 0
-      // let maxGears: IGearUnion[] = []
-      // let usableGears: IGearUnion[][] = []
-      // let slotCursors = new Map<number, number>()
-      // // init values
-      // Object.entries(self.groupedGears).forEach(entry => {
-      //   usableGears.push(entry[1])
-      //   const equip = entry[1][entry[1].length - 1]
-      //   currentGears.set(parseInt(entry[0]), equip)
-      //   slotCursors.set(parseInt(entry[0]), entry[1].length - 1)
-      //   if (!equip.isEquipped) {
-      //     self.equip(equip)
-      //   }
-      // })
-      // if (self.equippedEffects?.gcd === self.bisExpectedGcd / 100) {
-      //   maxScore = self.equippedEffects?.damage || 0
-      //   maxGears = []
-      //   maxGears.push(...currentGears.values())
-      // }
+      // console.log('prev best', currentBestSet, currentBestScore, 'finding best', newBestSet, newBestScore)
+      if (newBestScore > currentBestScore) {
+        // console.log('find better det plan')
+        let index = 0
+        G.materiaGrades.forEach(grade => {
+          const materias = gradedMaterias.get(grade)
+          if (!materias) {
+            return
+          }
+          materias.forEach(materia => {
+            materia.meld(newBestSet[index].stat, newBestSet[index].grade)
+            index++
+          })
+        })
+      } else {
+        // restore
+        restoreCurrentSet()
+      }
 
-      // let counter = 0
+      if (self.bisFoodForSpeed) {
+        let currentFood: IFood | undefined = undefined
+          foods.forEach(food => {
+            if (food.isFood) {
+              if (!currentFood) {
+                currentFood = food
+              }
+              self.equip(food)
+              const currentEffects = self.equippedEffects!
+              if (currentEffects.damage > currentScore && floor(currentEffects.gcd * 100) <= self.bisExpectedGcd) {
+                currentScore = currentEffects.damage
+                currentFood = food
+              } else {
+                self.equip(currentFood)
+              }
+              // counter++
+            }
+          })
+      }
 
-
-
-      // // 装备全排列
-      // const end = usableGears.length
-      // const allSets: IGearUnion[][] = []
-      // const path: IGearUnion[] = []
-      // const step = (index: number) => {
-      //   if (index === end) {
-      //     allSets.push(path.slice())
-      //     return
-      //   }
-      //   const currentList = usableGears[index]
-      //   for (let i = 0; i < currentList.length; i++) {
-      //     path.push(currentList[i])
-      //     step(index + 1)
-      //     path.pop()
-      //   }
-      // }
-      // step(0)
-      // console.log('set count', allSets.length)
-
-      // for (let i = 0; i < usableGears.length; i++) {
-      //   const slotGears = usableGears[i]
-      //   for (let j = 0; j < slotGears.length; j++) {
-      //     const gear = slotGears[j]
-      //     if (currentGears.get(gear.slot)?.id === gear.id) {
-      //       continue
-      //     }
-      //     if (!gear.isFood && gear.source === '天书奇谈' && !self.bisUseOrnate) {
-      //       continue
-      //     }
-      //     counter++
-      //     currentGears.set(gear.slot, gear)
-      //     if (!gear.isEquipped) {
-      //       self.equip(gear)
-      //     }
-      //     if (self.equippedEffects?.gcd === self.bisExpectedGcd / 100 && self.equippedEffects.damage > maxScore) {
-      //       // console.debug('new best in slots, current', self.equippedEffects.damage, 'previous', maxScore)
-      //       maxScore = self.equippedEffects?.damage || 0
-      //       maxGears = []
-      //       maxGears.push(...currentGears.values())
-      //     }
-      //   }
-      // }
-
-      // for (const gear of currentGears.values()) {
-      //   if (gear.isEquipped) {
-      //     self.equip(gear)
-      //   }
-      // }
-
-      // maxGears.forEach(i => {
-      //   if (!i.isEquipped) {
-      //     self.equip(i)
-      //   }
-      // })
-      // console.debug('result', maxGears.map(i => {
-      //   let result: any = {
-      //     id: i.id,
-      //     name: i.name,
-      //     level: i.level
-      //   }
-      //   if (!i.isFood) {
-      //     result.source = i.source
-      //   }
-      //   return result
-      // }))
-      // console.debug('gearset test count', counter)
+      console.log('finished in', Date.now() - start, 'ms')
     }
   }));
 
