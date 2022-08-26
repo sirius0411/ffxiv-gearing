@@ -17,6 +17,7 @@ import { MateriaOverallPanel } from './MateriaOverallPanel';
 import { SharePanel } from './SharePanel';
 import { ImportPanel } from './ImportPanel';
 import { SettingPanel } from './SettingPanel';
+import { BisCalculatorPanel } from './BisCalculatorPanel';
 
 export const Condition = mobxReact.observer(() => {
   const store = useStore();
@@ -122,6 +123,15 @@ export const Condition = mobxReact.observer(() => {
             <Button ref={ref} className="condition_button" onClick={toggle}>魔晶石</Button>
           )}
           popper={MateriaOverallPanel}
+          placement="bottom-start"
+        />
+      )}
+      {editing && (
+        <Dropdown
+          label={({ ref, toggle }) => (
+            <Button ref={ref} className="condition_button" onClick={toggle}>镶嵌计算</Button>
+          )}
+          popper={BisCalculatorPanel}
           placement="bottom-start"
         />
       )}
