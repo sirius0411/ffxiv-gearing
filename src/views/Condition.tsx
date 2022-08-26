@@ -126,7 +126,7 @@ export const Condition = mobxReact.observer(() => {
           placement="bottom-start"
         />
       )}
-      {editing && (
+      {editing && store.schema.mainStat && (
         <Dropdown
           label={({ ref, toggle }) => (
             <Button ref={ref} className="condition_button" onClick={toggle}>最优镶嵌</Button>

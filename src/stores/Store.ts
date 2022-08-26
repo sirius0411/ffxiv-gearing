@@ -631,6 +631,7 @@ export const Store = mst.types
                       let index = 0
                       gradedMaterias.get(lowerGrade)?.forEach(i => {
                         i.meld(snapshot[index].stat, snapshot[index].grade)
+                        index++
                       })
                     }
                   }

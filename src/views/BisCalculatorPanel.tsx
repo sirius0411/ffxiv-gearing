@@ -10,11 +10,12 @@ import { TextField } from '@rmwc/textfield';
 import { List, ListItem } from '@rmwc/list';
 import { Radio } from '@rmwc/radio';
 import { Button } from '@rmwc/button';
+import { DropdownPopperProps } from './components/Dropdown';
 
 const GCD_MIN = 150
 const GCD_MAX = 250
 
-export const BisCalculatorPanel = mobxReact.observer(() => {
+export const BisCalculatorPanel = mobxReact.observer<DropdownPopperProps>(({toggle}) => {
   const store = useStore();
   const [alertMessage, setAlertMessage] = React.useState('')
   return (
@@ -85,24 +86,20 @@ export const BisCalculatorPanel = mobxReact.observer(() => {
       </div>
       <Button onClick={() => {
         setAlertMessage('')
-        // 计算规模
-        // let setCount = 1
-        // Object.values(store.groupedGears).forEach(group => {
-        //   if (group[0].isFood) {
-        //     return
-        //   }
-        //   setCount = setCount * group.length
-        // })
-        // if (setCount > 1000000) {
-        //   setAlertMessage(`当前筛选范围内可选组合数大于100w套，请缩减筛选范围后重试`)
-        //   return
-        // }
-        // gcd检查
-        // if (store.equippedEffects && store.equippedEffects.gcd * 100 < store.bisExpectedGcd) {
-        //   setAlertMessage('当前装备GCD已经溢出，请调整后再试')
-        //   return
-        // }
-        store.calculateBisMeld()
+        let hasGears = false
+        for (const gear of store.equippedGears.values()) {
+          if (!gear?.isFood) {
+            hasGears = true
+            break
+          }
+        }
+        if (!hasGears) {
+          setAlertMessage('还没选择装备，请先选择想要使用的装备后再开始计算。')
+        } else {
+          store.calculateBisMeld()
+          toggle()
+          window.location.replace(store.shareUrl)
+        }
       }}>开始计算</Button>
     </div>
   );
