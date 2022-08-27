@@ -26,7 +26,7 @@ export const BisCalculatorPanel = mobxReact.observer<DropdownPopperProps>(({togg
       </div>
       <div className="setting_section">
         <span className="setting_title">期望GCD</span>
-        <span className="setting_sub">GCD范围为1.5s-2.5s</span>
+        <span className="setting_sub">GCD范围为1.5s-2.5s。如果当前装备下无法达到期望GCD则会尽量靠近。</span>
       </div>
       <div className="setting_controls">
         <GcdInput value={store.bisExpectedGcd} onChange={v => store.setExpectedGcd(v)}/>
@@ -98,7 +98,7 @@ export const BisCalculatorPanel = mobxReact.observer<DropdownPopperProps>(({togg
         } else {
           store.calculateBisMeld()
           toggle()
-          window.location.replace(store.shareUrl)
+          // window.location.replace(store.shareUrl)
         }
       }}>开始计算</Button>
     </div>

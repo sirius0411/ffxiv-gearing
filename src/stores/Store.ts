@@ -498,9 +498,71 @@ export const Store = mst.types
         })
       }
 
-      // let counter = 0
+      let counter = 0
 
-      const findBest = () => {
+      // 爆 > 信 > 直 优先级替换
+      // FIXME 需要优化，暂时不使用
+      const greedyFindBest = () => {
+        const statList: G.Stat[] = ['CRT', 'DET', 'DHT']
+        statList.forEach(stat => {
+          G.materiaGrades.forEach(grade => {
+            const materias = gradedMaterias.get(grade)
+            if (!materias) {
+              return
+            }
+            materias.forEach(materia => {
+              const space = (materia.gear.currentMeldableStats[stat] || 0)
+              const amount = (G.materias[stat]?.[grade-1] || 0)
+              if (space >= amount && (materia.stat === undefined || materia.stat === speedStat)) {
+                let currentStat = materia.stat
+                materia.meld(stat, grade)
+                const currentEffects = self.equippedEffects!
+                if (currentEffects.damage >= currentScore && floor(currentEffects.gcd * 100) <= self.bisExpectedGcd) {
+                  newBestSet = []
+                  G.materiaGrades.forEach(grade => {
+                    const materias = gradedMaterias.get(grade)
+                    if (!materias) {
+                      return
+                    }
+                    materias.forEach(materia => {
+                      newBestSet.push({
+                        stat: materia.stat,
+                        grade: materia.grade,
+                      })
+                    })
+                  })
+                  newBestScore = currentEffects.damage
+                }
+              }
+            })
+          })
+        })
+
+        if (!self.equippedGears.get('-1')) {
+          let currentFood: IFood | undefined = undefined
+          foods.forEach(food => {
+            if (food.isFood) {
+              if (!currentFood) {
+                currentFood = food
+              }
+              self.equip(food)
+              const currentEffects = self.equippedEffects!
+              if (currentEffects.damage >= currentScore && floor(currentEffects.gcd * 100) <= self.bisExpectedGcd) {
+                currentScore = currentEffects.damage
+                currentFood = food
+              } else {
+                self.equip(currentFood)
+              }
+              counter++
+            }
+          })
+        }
+      }
+
+      // greedyFindBest()
+
+      // 单轮贪心最优
+      const simpleFindBest = () => {
         G.materiaGrades.forEach(grade => {
           const materias = gradedMaterias.get(grade)
           if (!materias) {
@@ -519,7 +581,7 @@ export const Store = mst.types
                 } else {
                   materia.meld(currentStat, grade)
                 }
-                // counter++
+                counter++
               }
             })
           })
@@ -534,24 +596,28 @@ export const Store = mst.types
               }
               self.equip(food)
               const currentEffects = self.equippedEffects!
-              if (currentEffects.damage > currentScore && floor(currentEffects.gcd * 100) <= self.bisExpectedGcd) {
+              if (currentEffects.damage >= currentScore && floor(currentEffects.gcd * 100) <= self.bisExpectedGcd) {
                 currentScore = currentEffects.damage
                 currentFood = food
               } else {
                 self.equip(currentFood)
               }
-              // counter++
+              counter++
             }
           })
         }
       }
 
-      for (let i = 0; i < 2; i++) {
-        // 第二次处理属性溢出的宝石
-        findBest()
-      }
+      simpleFindBest()
 
-      // 处理属性陷阱，寻找是否存在更优属性平行替换方案
+      console.debug('simple find best counter', counter)
+      counter = 0
+
+
+      // 在单轮贪心的基础上，对三大属性（爆直信）递归寻找是否存在更优属性平行替换方案
+      // 技速越高（强制技速石头越多），全排列组合数越少，被动剪枝
+      // 全身5孔装备条件下，组合数量级在1000+，可以接受目前的复杂度
+      // TODO 全部非技速石头换成一个属性，然后枚举换成另外两种属性
       type MeldItem = {
         stat: G.Stat | undefined;
         grade: G.MateriaGrade | undefined;
@@ -560,19 +626,21 @@ export const Store = mst.types
       let currentBestScore = currentScore
       let newBestSet: MeldItem[] = []
       let newBestScore = currentScore
-      // save current set
-      G.materiaGrades.forEach(grade => {
-        const materias = gradedMaterias.get(grade)
-        if (!materias) {
-          return
-        }
-        materias.forEach(materia => {
-          currentBestSet.push({
-            stat: materia.stat,
-            grade: materia.grade,
+      
+      const saveCurrentSet = () => {
+        G.materiaGrades.forEach(grade => {
+          const materias = gradedMaterias.get(grade)
+          if (!materias) {
+            return
+          }
+          materias.forEach(materia => {
+            currentBestSet.push({
+              stat: materia.stat,
+              grade: materia.grade,
+            })
           })
         })
-      })
+      }
       const restoreCurrentSet = () => {
         let index = 0
         G.materiaGrades.forEach(grade => {
@@ -586,6 +654,7 @@ export const Store = mst.types
           })
         })
       }
+      saveCurrentSet()
       // find for better plans moving one to another
       const findInGrade = (grade: G.MateriaGrade, from: G.Stat, tos: G.Stat[]) => {
         const materias = gradedMaterias.get(grade)
@@ -599,6 +668,7 @@ export const Store = mst.types
               const amount = (G.materias[to]?.[grade-1] || 0)
               // console.log(from, to, 'space', space, 'amount', amount)
               if (space > amount) {
+                counter++
                 materia.meld(to, grade)
                 const score = self.equippedEffects!.damage
                 // console.log(score, newBestScore)
@@ -621,19 +691,10 @@ export const Store = mst.types
                 } else {
                   if (grade - 1 > 0) {
                     const lowerGrade = (grade - 1) as G.MateriaGrade
-                    const snapshot: MeldItem[] | undefined = gradedMaterias.get(lowerGrade)?.map(v => ({
-                      stat: v.stat,
-                      grade: v.grade
-                    }))
-                    if (snapshot) {
-                      findInGrade(lowerGrade, from, tos)
-                      // restore lower grade
-                      let index = 0
-                      gradedMaterias.get(lowerGrade)?.forEach(i => {
-                        i.meld(snapshot[index].stat, snapshot[index].grade)
-                        index++
-                      })
-                    }
+                    // 深层寻找平替方案
+                    findInGrade(lowerGrade, 'DHT', ['DET', 'CRT'])
+                    findInGrade(lowerGrade, 'DET', ['DHT', 'CRT'])
+                    findInGrade(lowerGrade, 'CRT', ['DHT', 'DET'])
                   }
                 }
               }
@@ -645,13 +706,14 @@ export const Store = mst.types
         if (gradedMaterias.has(grade)) {
           // console.log('finding in grade', grade)
           findInGrade(grade, 'DHT', ['DET', 'CRT'])
-          restoreCurrentSet()
+          // restoreCurrentSet()
           findInGrade(grade, 'DET', ['DHT', 'CRT'])
-          restoreCurrentSet()
+          // restoreCurrentSet()
           findInGrade(grade, 'CRT', ['DHT', 'DET'])
           break
         }
       }
+      console.debug('find in grade counter', counter)
 
       // console.log('prev best', currentBestSet, currentBestScore, 'finding best', newBestSet, newBestScore)
       if (newBestScore > currentBestScore) {
