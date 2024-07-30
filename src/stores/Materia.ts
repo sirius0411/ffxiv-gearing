@@ -18,13 +18,16 @@ export const Materia = mst.types
   .views(self => ({
     get name(): string {
       return self.stat === undefined ? '' : G.getMateriaName(self.stat, self.grade!,
-        (mst.getEnv(self).setting as ISetting).materiaDisplayName === 'stat');
+        (mst.getEnv(self).setting as ISetting).materiaDisplayName === 'stat', 3);
     },
     get isAdvanced(): boolean {
       return self.index >= self.gear.materiaSlot;
     },
+    get isRestricted(): boolean {
+      return self.index > self.gear.materiaSlot;
+    },
     get meldableGrades(): G.MateriaGrade[] {
-      return (self.index > self.gear.materiaSlot ? G.materiaGradesAdvanced : G.materiaGrades)
+      return (this.isRestricted ? G.materiaGradesAdvanced : G.materiaGrades)
         .filter(grade => self.gear.level >= G.materiaGradeRequiredLevels[grade - 1]);
     },
     get successRate(): number | undefined {

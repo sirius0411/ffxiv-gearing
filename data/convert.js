@@ -12,7 +12,6 @@ function stringify(obj) {
 function loadExd(filename) {
   const data = Papa.parse(fs.readFileSync('./in/' + filename, 'utf8')).data;
   const fields = data[1];
-  if (filename === 'ClassJobCategory.csv') fields.splice(41, 2, 'RPR', 'SGE');  // FIXME
   return data.slice(3, -1).map(line => {
     const ret = {};
     for (let i = 0; i < line.length; i++) {
@@ -35,38 +34,38 @@ const statAbbrs = {
 const jobs = [
   'PLD', 'WAR', 'DRK', 'GNB',
   'WHM', 'SCH', 'AST', 'SGE',
-  'MNK', 'DRG', 'NIN', 'SAM', 'RPR',
+  'MNK', 'DRG', 'NIN', 'SAM', 'RPR', 'VPR',
   'BRD', 'MCH', 'DNC',
-  'BLM', 'SMN', 'RDM', 'BLU',
+  'BLM', 'SMN', 'RDM', 'PCT', 'BLU',
   'CRP', 'BSM', 'ARM', 'GSM', 'LTW', 'WVR', 'ALC', 'CUL',
   'MIN', 'BTN', 'FSH',
 ];
 
-const itemPatchIds = require('./in/Item.json');
-for (let i = 34965; i <= 35019; i++) itemPatchIds[i] = 78;  // temporary fix of ffxiv-datamining-patches data incorrect
-const patchOfId = {
-  81: '6.11',
-  82: '6.2',
-};
-const lastPatchId = Number(Object.keys(patchOfId).slice(-1)[0]);
-
 const patches = {
-  data: '6.2',  // 主数据的版本，即国际服游戏版本
-  next: '6.11',  // 对国服来说，下一个有装备更新的版本
-  current: '6.1',  // 国服当前游戏版本
+  data: '7.01',  // 主数据的版本，即国际服游戏版本
+  next: '7.0',  // 对国服来说，下一个有装备更新的版本
+  current: '6.99',  // 国服当前游戏版本
 };
 
 const sourceOfId = {};
+const patchOfId = {};
 {
   const sourcesLines = fs.readFileSync('./in/sources.txt', 'utf8').split(/\r?\n/);
   let source;
-  for (const line of sourcesLines) {
+  let patch;
+  for (let line of sourcesLines) {
     if (line === '') {
       source = undefined;
+      patch = undefined;
       continue;
     }
+    const patchMark = /@([\d.]+)/.exec(line)?.[1];
+    if (patchMark > patches.current) {
+      patch = patchMark;
+    }
+    line = line.replace(/\s*[#@].*/, '');
     if (source === undefined) {
-      source = line.replace(/\s*#.*/, '');
+      source = line;
       continue;
     }
     const parts = line.split('-');
@@ -75,6 +74,7 @@ const sourceOfId = {};
     for (let i = begin; i <= end; i++) {
       if (i in sourceOfId) throw Error(`装备 ${i} 来源存在冲突。`);
       sourceOfId[i] = source;
+      patchOfId[i] = patch;
     }
   }
 }
@@ -87,6 +87,17 @@ const ItemCn = loadExd('Item.cn.csv');
 const ItemAction = loadExd('ItemAction.csv');
 const ItemFood = loadExd('ItemFood.csv');
 const ItemLevel = loadExd('ItemLevel.csv');
+
+const slotComposite = {
+  15: [4, 3],
+  16: [4, 5, 7, 8],
+  // 17: 职业水晶
+  18: [7, 8],
+  19: [4, 3, 5, 7, 8],
+  20: [4, 5, 7],
+  21: [4, 7, 8],
+  22: [4, 5],
+};
 
 const jobCategories = ClassJobCategory.map(line => {
   const ret = {};
@@ -110,6 +121,7 @@ const jobCategoryOfMainStats = {
 const lodestoneIds = [undefined, ...fs.readFileSync('./in/lodestone-item-id.txt', 'utf8')
   .split(/\r?\n/).map(x => x || undefined)];
 
+const slotsUsed = [];
 const jobCategoriesUsed = [];
 const levelsUsed = {};
 const lodestoneIdsUsed = [];
@@ -125,6 +137,11 @@ const gears = Item
     ret.level = Number(x['Level{Item}']);
     ret.rarity = Number(x['Rarity']);
     ret.slot = Number(x['EquipSlotCategory']);
+    if (ret.slot in slotComposite) {
+      ret.rawSlot = ret.slot;
+      // ret.occupiedSlots = slotComposite[ret.slot].slice(1);
+      ret.slot = slotComposite[ret.slot][0];
+    }
     ret.role = Number(x['BaseParamModifier']);
     ret.jobCategory = Number(x['ClassJobCategory']);
     ret.equipLevel = Number(x['Level{Equip}']);
@@ -135,7 +152,7 @@ const gears = Item
     ret.source = sourceOfId[x['#']];
     ret.obsolete = (ret.rarity === 7 && ret.source !== '危命任务' && !(ret.slot >= 9 && ret.slot <= 12)) ||
       ret.source?.endsWith('已废弃') || ret.source === '旧空岛' ? true : undefined;
-    ret.patch = patchOfId[itemPatchIds[x['#']] ?? lastPatchId];
+    ret.patch = patchOfId[x['#']];
 
     // stats
     const rawStats = {};
@@ -182,10 +199,16 @@ const gears = Item
         if (!craft && !gather) ret.jobCategory = 34;
       }
     }
-    if (ret.jobCategory === 63 && ret.equipLevel > 70) {  // 青魔并不能装备高等级装备
-      ret.jobCategory = 89;
+    if (ret.jobCategory === 63 && ret.equipLevel > 80) {  // 青魔并不能装备高等级装备
+      ret.jobCategory = 147;
     }
 
+    if (ret.source?.startsWith('巧手大地')) {
+      const craft = 'CMS' in ret.stats || 'CRL' in ret.stats || 'CP' in ret.stats;
+      ret.source = (craft ? '巧手' : '大地') + ret.source.slice(4);
+    }
+
+    slotsUsed[ret.rawSlot ?? ret.slot] = true;
     jobCategoriesUsed[ret.jobCategory] = jobCategories[ret.jobCategory];
     levelsUsed[ret.level] = true;
     lodestoneIdsUsed[ret.id] = lodestoneIds[ret.id];
@@ -217,7 +240,7 @@ const foods = Item
     ret.stats = {};
     ret.statRates = {};
     ret.statMain = statAbbrs[itemFood['BaseParam[0]']];
-    ret.patch = patchOfId[itemPatchIds[x['#']] ?? lastPatchId];
+    ret.patch = patchOfId[x['#']];
 
     // stats
     for (const i of [0, 1, 2]) {
@@ -249,17 +272,19 @@ const foods = Item
     }
     if (Object.keys(jobs).length === 0) {
       if (!('SPS' in ret.stats)) {
-        ['PLD', 'WAR', 'DRK', 'GNB', 'MNK', 'DRG', 'NIN', 'SAM', 'RPR', 'BRD', 'MCH', 'DNC']
+        ['PLD', 'WAR', 'DRK', 'GNB', 'MNK', 'DRG', 'NIN', 'SAM', 'RPR', 'VPR', 'BRD', 'MCH', 'DNC']
           .forEach(j => jobs[j] = true);
       }
       if (!('SKS' in ret.stats)) {
-        ['WHM', 'SCH', 'AST', 'SGE', 'BLM', 'SMN', 'RDM', 'BLU'].forEach(j => jobs[j] = true);
+        ['WHM', 'SCH', 'AST', 'SGE', 'BLM', 'SMN', 'RDM', 'PCT', 'BLU'].forEach(j => jobs[j] = true);
       }
     }
     ret.jobCategory = jobCategoryMap[Object.keys(jobs).sort().join(',')];
     if (ret.jobCategory === undefined) debugger;
     lodestoneIdsUsed[ret.id] = lodestoneIds[ret.id];
-
+    if (!ItemCn[index]?.['Name'] && sourceOfId[ret.id] === undefined) {
+      sourcesMissing[ret.id] = `food  ${ret.name}`;
+    }
     return ret;
   })
   .filter(Boolean);
@@ -267,7 +292,7 @@ const foods = Item
 const bestFoods = [];
 for (const food of foods.slice().reverse()) {
   if (food.id === 4745) continue;  // 唯一的直击信仰食物，各只加1，应该并不会有人想吃它
-  if (food.patch > '6.0' /* patches.current */) {  // 不强制显示6.0版本的新食物和6.0之前的国服已实装范围内的最优食物
+  if (food.patch > '7.0' /* patches.current */) {  // 不强制显示7.0版本的新食物和7.0之前的国服已实装范围内的最优食物
     food.best = true;
     continue;
   }
@@ -279,7 +304,7 @@ for (const food of foods.slice().reverse()) {
 
 const syncLevelOfJobLevel = {};
 for (const x of ContentFinderCondition) {
-  if (x['ClassJobLevel{Required}'] === x['ClassJobLevel{Sync}'] && Number(x['ClassJobLevel{Required}']) >= 50) {
+  if (x['ClassJobLevel{Required}'] % 10 === 0 && Number(x['ClassJobLevel{Required}']) >= 50) {
     syncLevelOfJobLevel[x['ItemLevel{Required}']] = x['ClassJobLevel{Required}'];
     syncLevelOfJobLevel[x['ItemLevel{Sync}']] = x['ClassJobLevel{Required}'];
   }
@@ -302,9 +327,10 @@ for (const i of Object.keys(statAbbrs)) {
   levelCaps[statAbbrs[i]] = levelCaps.level.map(l => parseInt(ItemLevel[l][i], 10));
 }
 
+delete slotsUsed[0];
 const slotCaps = {};
 for (const i of Object.keys(statAbbrs)) {
-  slotCaps[statAbbrs[i]] = Array.from({ length: 14 }).map((_, j) => j === 0 ? 0 : parseInt(BaseParam[i][4 + j], 10));
+  slotCaps[statAbbrs[i]] = Array.from(slotsUsed).map((_, j) => _ ? parseInt(BaseParam[i][4 + j], 10) : 0);
 }
 
 const roleCaps = {};
@@ -312,7 +338,14 @@ for (const i of Object.keys(statAbbrs)) {
   roleCaps[statAbbrs[i]] = Array.from({ length: 13 }).map((_, j) => parseInt(BaseParam[i][27 + j], 10));
 }
 
-const levelGroupBasis = [1, 70, 136, 255, 340, 385, 401, 470, 560];
+const levelGroupBasis = [
+  1, 70, 136,
+  210, 255, 271,
+  340, 385, 401,
+  470, 515, 531,
+  600, 645, 661,
+  690,
+];
 const levelGroupIds = [];
 const levelGroupLast = levelGroupBasis[levelGroupBasis.length - 1];
 let groupId = 0;

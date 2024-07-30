@@ -4,7 +4,6 @@
 
   const data = {
     job: null,
-    jobLevel: 90,  // FIXME
     gears: [],
   };
 
@@ -16,10 +15,9 @@
   try {
 
     // Ariyala's Final Fantasy XIV Toolkit
-    const { characterData } = window;
+    const { characterData, ContentGearCalculator } = window;
     if (characterData !== undefined) {
       const { identifier, items, materiaData } = characterData.currentSet;
-      data.job = identifier;
       for (const slot of Object.keys(items)) {
         const item = items[slot];
         const id = item.itemID;
@@ -29,31 +27,14 @@
         });
         data.gears.push({ id, materias });
       }
+      data.job = identifier;
+      data.jobLevel = parseInt(ContentGearCalculator.currentLevel, 10);
     }
 
-    // FFXIV ORE TOOLS
-    const { filterJobClass, equipSelectorList, jqsEquipList, materiaSelectorList, jqsMateriaList } = window;
-    if (filterJobClass !== undefined) {
-      const materiaTypes = {
-        'mat_hit': 'DHT',
-        'mat_crit': 'CRT',
-        'mat_will': 'DET',
-        'mat_skill_speed': 'SKS',
-        'mat_spell_speed': 'SPS',
-        'mat_dodge': 'TEN',
-        'mat_pie': 'PIE',
-        'mat_str': 'STR',
-        'mat_vit': 'VIT',
-        'mat_dex': 'DEX',
-        'mat_int': 'INT',
-        'mat_mnd': 'MND',
-        'mat_work': 'CMS',
-        'mat_edit': 'CRL',
-        'mat_cp': 'CP',
-        'mat_gain': 'GTH',
-        'mat_quality': 'PCP',
-        'mat_gp': 'GP',
-      };
+    // FF14俺Tools
+    const { controller } = window;
+    if (controller?.equipManager !== undefined) {
+      const materiaTypes = { CRIT: 'CRT', DH: 'DHT', CRFT: 'CMS', CNTL: 'CRL', GATH: 'GTH', PERC: 'PCP' };
       const lodestoneIds = (await import(/* webpackChunkName: "lodestone-id" */'../data/out/lodestoneIds')).default;
       const lodestoneIdToItemId = {};
       for (let i = 0; i < lodestoneIds.length; i++) {
@@ -61,26 +42,25 @@
           lodestoneIdToItemId[lodestoneIds[i]] = i;
         }
       }
-      data.job = filterJobClass;
-      for (let i = 0; i < equipSelectorList.length; i++) {
-        const equipSelector = equipSelectorList[i];
-        const equip = jqsEquipList[equipSelector].setting.data[jqsEquipList[equipSelector].selectedIndex];
-        const materiaData = jqsMateriaList[materiaSelectorList[i]].selectedMateriaData;
-        if (equip.data) {
-          const id = lodestoneIdToItemId[equip.data.id];
-          if (id !== undefined) {
-            const materias = (materiaData || []).map(m => [materiaTypes[m.key], Number(m.level)]);
-            data.gears.push({ id, materias });
-          }
+      for (const entry of Object.values(controller.equipManager.equipSelectors)) {
+        const id = lodestoneIdToItemId[entry?.selectedItem?.id];
+        if (id !== undefined) {
+          const materias = entry.selectedMateria?.list?.map(m => [materiaTypes[m.key] ?? m.key, m.tier + 1]) ?? [];
+          data.gears.push({ id, materias });
         }
       }
+      const foodId = lodestoneIdToItemId[controller.config.conf.meal?.slice(0, 11)];
+      if (foodId !== undefined) {
+        data.gears.push({ id: foodId, materias: [] });
+      }
+      data.job = controller.config.conf.jobId;
+      data.jobLevel = controller.config.conf.lvHigh;
     }
 
     // Etro
     if (/\betro\b/i.test(document.title)) {
       let element = document.getElementById('root')._reactRootContainer._internalRoot.current;
-      while (element.child && !(element.memoizedProps && element.memoizedProps.value &&
-        element.memoizedProps.value.store)) element = element.child;
+      while (element.child && !(element.memoizedProps?.value?.store)) element = element.child;
       const state = element.memoizedProps.value.store.getState();
       const materiaInfoOfId = {};
       for (const materiaInfo of state.materia.materiaSelectOptions) {
@@ -110,12 +90,12 @@
           let materiaKey = id;
           if (slot === 'fingerL') materiaKey += 'L';
           if (slot === 'fingerR') materiaKey += 'R';
-          const materia = state.gearsets.gearset.materia[materiaKey];
+          const materia = state.gearsets.gearset.materia?.[materiaKey];
           const materias = [];
           if (materia) {
             for (const [ index, materiaId ] of Object.entries(materia)) {
               const materiaInfo = materiaInfoOfId[materiaId];
-              if (materiaInfo.param in materiaTypes) {
+              if (materiaInfo !== undefined && materiaInfo.param in materiaTypes) {
                 materias[index - 1] = [materiaTypes[materiaInfo.param], materiaInfo.tier];
               }
             }
@@ -124,34 +104,52 @@
         }
       }
       data.job = state.jobs.currentJob.abbrev;
+      data.jobLevel = state.gearsets.gearset.level;
+      data.syncLevel = state.gearsets.gearset.itemLevelSync;
     }
 
     // FFXIV Teamcraft
     const teamcraftApp = document.getElementsByTagName('app-gearset-display')[0];
     if (teamcraftApp !== undefined) {
-      const component = teamcraftApp.__ngContext__[teamcraftApp.__ngContext__.length - 1];
-      const gearset = await new Promise(resolve => { component.gearset$.subscribe(v => resolve(v)); });
+      // obtain component instance in a very evil way...
+      const mainUrl = Array.from(document.getElementsByTagName('script'),
+          e => e.getAttribute('src')).find(s => s?.includes('/main-'));
+      const mainScript = await (await fetch(mainUrl)).text();
+      const gearsetPath = /path:"gearset",loadChildren:\(\)=>import\("([^"]+)"/.exec(mainScript)[1];
+      const gearsetUrl = new URL(gearsetPath, mainUrl).href;
+      const { GearsetModule } = await import(/* webpackIgnore: true */gearsetUrl);
+      const Component = GearsetModule.prototype.constructor.ɵinj.imports
+        .find(i => i.providers).providers[0].useValue[0].component;
+      const { copyToClipboard } = Component.prototype;
+      let component;  // eslint-disable-next-line @typescript-eslint/no-this-alias
+      Component.prototype.copyToClipboard = function () { component = this; };
+      teamcraftApp.querySelector('.page-title [nztype="snippets"]').parentNode.click();
+      Component.prototype.copyToClipboard = copyToClipboard;
+
+      const subscribe = observable => new Promise(resolve => { observable.subscribe(v => resolve(v)); });
+      const gearset = await subscribe(component.gearset$);
+      const materias = await subscribe(component.lazyData.getEntry('materias'));
       const materiaMap = {};
-      component.lazyData.data.materias.forEach(m => { materiaMap[m.itemId] = m; });
+      materias.forEach(m => { materiaMap[m.itemId] = m; });
       for (const item of Object.values(gearset)) {
-        if (item) {
-          const id = item.itemId;
-          if (id) {
-            const materias = item.materias.map(materiaId => {
-              const materia = materiaMap[materiaId];
-              if (!materia) return null;
-              const stat = materiaTypes[materia.baseParamId];
-              if (!stat) return null;
-              return [stat, materia.tier];
-            });
-            data.gears.push({ id, materias });
-          }
-          if (item.ID) {  // food
-            data.gears.push({ id: item.ID, materias: [] });
-          }
+        if (item?.itemId) {
+          const materias = item.materias.map(materiaId => {
+            const materia = materiaMap[materiaId];
+            if (!materia) return null;
+            const stat = materiaTypes[materia.baseParamId];
+            if (!stat) return null;
+            return [stat, materia.tier];
+          });
+          data.gears.push({ id: item.itemId, materias });
         }
       }
-      data.job = component.lazyData.data.jobAbbr[gearset.job].en;
+      const food = await subscribe(component.food$);
+      if (food) {
+        data.gears.push({ id: food.ID, materias: [] });
+      }
+      const jobAbbr = await subscribe(component.lazyData.getEntry('jobAbbr'));
+      data.job = jobAbbr[gearset.job].en;
+      data.jobLevel = await subscribe(component.level$);
     }
 
   } catch (e) { debugger; }  // eslint-disable-line no-debugger
@@ -160,9 +158,9 @@
     const importUrl = origin + '?import-' + encodeURIComponent(JSON.stringify(data));
     console.log(importUrl);
     if (window.open(importUrl) === null) {
-      prompt('Open this url to import.', importUrl);
+      prompt('打开此链接进行导入：', importUrl);
     }
   } else {
-    alert('No supported data found on this site.');
+    alert('未能在此页面中找到支持导入的数据。');
   }
 })();

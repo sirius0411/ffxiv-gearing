@@ -43,14 +43,27 @@ const parseQuery = () => {
   } else {
     if (query.startsWith('import-')) {
       const gearset = JSON.parse(decodeURIComponent(query.slice('import-'.length))) as G.Gearset;
+      if (gearset.syncLevel !== undefined) {
+        let matched = Object.entries(G.syncLevels).find(kvp => kvp[1].includes(gearset.syncLevel!))?.[0];
+        if (matched === undefined) {
+          matched = Object.entries(G.syncLevelOfJobLevels).find(kvp => kvp[1] === gearset.syncLevel)?.[0];
+          delete gearset.syncLevel;
+        }
+        if (matched !== undefined) {
+          gearset.jobLevel = parseInt(matched, 10) as G.JobLevel;
+        }
+      }
+      if (!G.jobLevels.includes(gearset.jobLevel)) {
+        gearset.jobLevel = G.jobSchemas[gearset.job].jobLevel;
+      }
       query = share.stringify(gearset);
       window.history.replaceState(window.history.state, document.title,
         window.location.href.replace(/\?.*$/, `?${query}`));
     }
     if (query.length > 3) {
       const gearset = share.parse(query);
-      if (gearset === 'legacy') {
-        window.location.href = window.location.href.replace('/?', '/shb/?');
+      if (typeof gearset === 'string') {
+        window.location.href = window.location.href.replace('/?', `/${gearset}/?`);
         return;
       }
       for (const gear of gearset.gears) {

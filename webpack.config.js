@@ -53,13 +53,6 @@ module.exports = function (env, argv) {
               },
             },
             {
-              loader: 'simple-functional-loader',
-              ident: 'use-ts2018-unsupported-bigint-literal',
-              options: {
-                processor: source => source.replace(/\bBigInt\((\d+)\)/g, '$1n'),
-              },
-            },
-            {
               loader: 'ts-loader',
               options: {
                 compilerOptions: {
@@ -133,7 +126,7 @@ module.exports = function (env, argv) {
           use: {
             loader: 'file-loader',
             options: {
-              name: '[name].[contenthash:6].[ext]',
+              name: '[name].[contenthash:10].[ext]',
             },
           },
         },
@@ -231,7 +224,7 @@ module.exports = function (env, argv) {
   const { getInfrastructureLogger } = infrastructureLogger;
   infrastructureLogger.getInfrastructureLogger = function () {
     const ret = getInfrastructureLogger.apply(this, arguments);
-    const info = { ret };
+    const { info } = ret;
     ret.info = function () {
       if (/^\u001b\[3[26]m/.test(arguments[0])) return;
       info.apply(this, arguments);

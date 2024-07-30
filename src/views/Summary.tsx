@@ -54,7 +54,7 @@ export const Summary = mobxReact.observer(() => {
               role="tooltip"
               children={<Icon name="help" />}
             />
-            <div className="summary_stat-name">每威力伤害期望</div>
+             <div className="summary_stat-name">每威力伤害期望</div>
           </span>
         )}
       </span>
@@ -85,7 +85,7 @@ export const Summary = mobxReact.observer(() => {
                 <div className="summary_stat-effect summary_stat-effect-hp">
                   {effects.hp}<span className="summary_stat-small">HP</span>
                 </div>
-              ) && false /* FIXME */}
+              )}
               {stat === 'TEN' && (
                 <div className="summary_stat-effect">
                   -{((effects.tenDamage - 1) * 100).toFixed(1)}%

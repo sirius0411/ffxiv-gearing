@@ -12,6 +12,7 @@ export interface GearBase {
 }
 export interface Gear extends GearBase {
   rarity: number,
+  rawSlot?: number,
   role: number,
   equipLevel: number,
   materiaSlot: number,
@@ -60,7 +61,8 @@ levelCaps.level.forEach((level, i) => {
 const capsCache: { [index: string]: Stats } = {};
 export function getCaps(gear: Gear, syncLevel?: number): Stats {
   const level = syncLevel ?? gear.level;
-  const { slot, role } = gear;
+  const slot = gear.rawSlot ?? gear.slot;
+  const role = gear.role;
   const cacheKey = `${level},${slot},${role}`;
   if (!(cacheKey in capsCache)) {
     const caps: Stats = {};
@@ -79,23 +81,27 @@ export function getCaps(gear: Gear, syncLevel?: number): Stats {
 export const jobLevelModifiers = {
   50: {
     main: 202, sub: 341, div: 341, det: 202, detTrunc: 5,
-    ap: 75, apTank: 53, hp: 1700, vit: 10.2, vitTank: 14.5,
+    ap: 75, apTank: 53, hp: 14, vit: 11.2, vitTank: 15.5,
   },
   60: {
     main: 218, sub: 354, div: 600, det: 600 /* FIXME */, detTrunc: 2,
-    ap: 100, apTank: 78, hp: 2600, vit: 15.4, vitTank: 20.5,
+    ap: 100, apTank: 78, hp: 15, vit: 12.9, vitTank: 17.5,
   },
   70: {
     main: 292, sub: 364, div: 900, det: 900, detTrunc: 1,
-    ap: 125, apTank: 105, hp: 3600, vit: 15.9, vitTank: 21.5,
+    ap: 125, apTank: 105, hp: 17, vit: 14.0, vitTank: 18.8,
   },
   80: {
     main: 340, sub: 380, div: 1300, det: 1300, detTrunc: 1,
-    ap: 165, apTank: 115, hp: 4400, vit: 22.1, vitTank: 31.5,
+    ap: 165, apTank: 115, hp: 20, vit: 18.8, vitTank: 26.6,
   },
   90: {
     main: 390, sub: 400, div: 1900, det: 1900, detTrunc: 1,
-    ap: 195, apTank: 155, hp: 4400, vit: 22.1, vitTank: 31.5,
+    ap: 195, apTank: 156, hp: 30, vit: 24.3, vitTank: 34.6,
+  },
+  100: {
+    main: 440, sub: 420, div: 2780, det: 2780, detTrunc: 1,
+    ap: 237, apTank: 190, hp: 40, vit: 30.1, vitTank: 43.0,
   },
 };
 export type JobLevel = keyof typeof jobLevelModifiers;
@@ -155,8 +161,8 @@ const slotSchemaCrafting = [
   slotSchemaGathering[slotSchemaGathering.length - 1],
 ];
 
-const defaultItemLevelCombat = [590, 635];
-const defaultItemLevelCrafting = [560, 590];
+const defaultItemLevelCombat = [690, 710];
+const defaultItemLevelCrafting = [690, 700];
 const defaultItemLevelGathering = defaultItemLevelCrafting;
 
 export interface JobSchema {
@@ -196,7 +202,7 @@ export const jobSchemas = {
     defaultItemLevel: defaultItemLevelCombat,
     jobLevel: jobLevelMax,
     levelSyncable: true,
-    statModifiers: { STR: 100, VIT: 110, hp: 120 },
+    statModifiers: { STR: 100, VIT: 110, hp: 140 },
     mainStat: 'VIT',
     traitDamageMultiplier: 1,
   } as JobSchema,
@@ -207,7 +213,7 @@ export const jobSchemas = {
     defaultItemLevel: defaultItemLevelCombat,
     jobLevel: jobLevelMax,
     levelSyncable: true,
-    statModifiers: { STR: 105, VIT: 110, hp: 125 },
+    statModifiers: { STR: 105, VIT: 110, hp: 145 },
     mainStat: 'VIT',
     traitDamageMultiplier: 1,
   } as JobSchema,
@@ -218,7 +224,7 @@ export const jobSchemas = {
     defaultItemLevel: defaultItemLevelCombat,
     jobLevel: jobLevelMax,
     levelSyncable: true,
-    statModifiers: { STR: 105, VIT: 110, hp: 120 },
+    statModifiers: { STR: 105, VIT: 110, hp: 140 },
     mainStat: 'VIT',
     traitDamageMultiplier: 1,
   } as JobSchema,
@@ -229,7 +235,7 @@ export const jobSchemas = {
     defaultItemLevel: defaultItemLevelCombat,
     jobLevel: jobLevelMax,
     levelSyncable: true,
-    statModifiers: { STR: 100, VIT: 110, hp: 120 },
+    statModifiers: { STR: 100, VIT: 110, hp: 140 },
     mainStat: 'VIT',
     traitDamageMultiplier: 1,
   } as JobSchema,
@@ -332,6 +338,17 @@ export const jobSchemas = {
     mainStat: 'STR',
     traitDamageMultiplier: 1,
   } as JobSchema,
+  VPR: {
+    name: 'Viper',
+    stats: statSchemas.dpsDex,
+    slots: slotSchemaCombat,
+    defaultItemLevel: defaultItemLevelCombat,
+    jobLevel: jobLevelMax,
+    levelSyncable: true,
+    statModifiers: { DEX: 110, VIT: 100, hp: 111, gcd: 85, gcdReason: '“疾速”状态中' },
+    mainStat: 'DEX',
+    traitDamageMultiplier: 1,
+  } as JobSchema,
   BRD: {
     name: '吟游诗人',
     stats: statSchemas.dpsDex,
@@ -398,6 +415,17 @@ export const jobSchemas = {
     mainStat: 'INT',
     traitDamageMultiplier: 1.3,
   } as JobSchema,
+  PCT: {
+    name: '绘灵法师',
+    stats: statSchemas.dpsInt,
+    slots: slotSchemaCombat,
+    defaultItemLevel: defaultItemLevelCombat,
+    jobLevel: jobLevelMax,
+    levelSyncable: true,
+    statModifiers: { INT: 115, VIT: 100, hp: 105 },
+    mainStat: 'INT',
+    traitDamageMultiplier: 1.3,
+  } as JobSchema,
   BLU: {
     name: '青魔法师',
     stats: statSchemas.dpsInt,
@@ -405,8 +433,8 @@ export const jobSchemas = {
       { slot: 13, name: '武器', levelWeight: 0, uiGroup: 'weapon' },
       ...slotSchemaCommon,
     ],
-    defaultItemLevel: [390, 400],
-    jobLevel: 70,
+    defaultItemLevel: [520, 530],
+    jobLevel: 80,
     levelSyncable: true,
     statModifiers: { INT: 115, VIT: 100, hp: 105 },
     mainStat: 'INT',
@@ -523,39 +551,39 @@ export const statHighlight: { [index in Stat]?: boolean } = {
 };
 
 export const materias: { [index in Stat]?: number[] } = {
-  PIE: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36],
-  DHT: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36],
-  CRT: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36],
-  DET: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36],
-  SPS: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36],
-  SKS: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36],
-  TEN: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36],
-  CMS: [3, 4, 5, 6, 11, 16, 14, 21, 18, 27],
-  CRL: [1, 2, 3, 4, 7, 10, 9, 13, 12, 18],
-  CP: [1, 2, 3, 4, 6, 8, 7, 9, 8, 10],
-  GTH: [3, 4, 5, 6, 10, 15, 12, 20, 14, 25],
-  PCP: [3, 4, 5, 6, 10, 15, 12, 20, 14, 25],
-  GP: [1, 2, 3, 4, 6, 8, 7, 9, 8, 10],
+  PIE: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36, 18, 54],
+  DHT: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36, 18, 54],
+  CRT: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36, 18, 54],
+  DET: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36, 18, 54],
+  SPS: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36, 18, 54],
+  SKS: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36, 18, 54],
+  TEN: [1, 2, 3, 4, 6, 16, 8, 24, 12, 36, 18, 54],
+  CMS: [3, 4, 5, 6, 11, 16, 14, 21, 18, 27, 22, 33],
+  CRL: [1, 2, 3, 4, 7, 10, 9, 13, 12, 18, 15, 23],
+  CP: [1, 2, 3, 4, 6, 8, 7, 9, 8, 10, 9, 11],
+  GTH: [3, 4, 5, 6, 10, 15, 12, 20, 14, 25, 20, 36],
+  PCP: [3, 4, 5, 6, 10, 15, 12, 20, 14, 25, 20, 36],
+  GP: [1, 2, 3, 4, 6, 8, 7, 9, 8, 10, 9, 11],
 };
-export type MateriaGrade = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-export const materiaGrades: MateriaGrade[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-export const materiaGradesAdvanced: MateriaGrade[] = [9, 7, 5, 4, 3, 2, 1];
-export const materiaGradeRequiredLevels: number[] = [15, 30, 45, 70, 160, 290, 420, 420, 560, 560];
+export type MateriaGrade = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export const materiaGrades: MateriaGrade[] = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+export const materiaGradesAdvanced: MateriaGrade[] = [11, 9, 7, 5, 4, 3, 2, 1];
+export const materiaGradeRequiredLevels: number[] = [15, 30, 45, 70, 160, 290, 420, 420, 560, 560, 690, 690];
 export const materiaSuccessRates: number[][] = [
-  [90, 82, 70, 58, 17, 17, 17, 17, 17, 17],
-  [48, 44, 38, 32, 10, 0, 10, 0, 10, 0],
-  [28, 26, 22, 20, 7, 0, 7, 0, 7, 0],
-  [16, 16, 14, 12, 5, 0, 5, 0, 5, 0],
+  [90, 82, 70, 58, 17, 17, 17, 17, 17, 17, 17, 17],
+  [48, 44, 38, 32, 10, 0, 10, 0, 10, 0, 10, 0],
+  [28, 26, 22, 20, 7, 0, 7, 0, 7, 0, 7, 0],
+  [16, 16, 14, 12, 5, 0, 5, 0, 5, 0, 5, 0],
 ];
 export const materiaNames: { [index in Stat]?: string } = {
   CRT: '武略', DHT: '神眼', DET: '雄略', SKS: '战技', SPS: '咏唱', TEN: '刚柔', PIE: '信力',
   CMS: '名匠', CRL: '巨匠', CP: '魔匠', GTH: '达识', PCP: '博识', GP: '器识',
 };
-export const materiaGradeNames: string[] = ['壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖', '拾'];
+export const materiaGradeNames: string[] = ['壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖', '拾', '拾壹', '拾贰'];
 export const materiaStatNames = { ...statNames, CP: 'CP', GP: 'GP' };
-export function getMateriaName(stat: Stat, grade: MateriaGrade, useStat: boolean) {
+export function getMateriaName(stat: Stat, grade: MateriaGrade, useStat: boolean, maxLength=4) {
   return useStat ? materiaStatNames[stat].slice(0, 2) + materias[stat]![grade - 1] :
-    materiaNames[stat]! + materiaGradeNames[grade - 1];
+    materiaNames[stat]!.slice(0, maxLength - materiaGradeNames[grade - 1].length) + materiaGradeNames[grade - 1];
 }
 
 export const races = [
@@ -591,9 +619,9 @@ export const clanStats: { [index in Stat]?: number[] } = {
 export const syncLevels = require('../data/out/syncLevels').default as { [index in JobLevel]: number[] };
 export const syncLevelIsPopular: { [index: number]: boolean } = {
   300: true,  // Eureka
-  345: true, 375: true, 475: true,  // Ultimate Raids
-  435: true,  // Unreal Trials
+  345: true, 375: true, 475: true, 605: true, 635: true,  // Ultimate Raids
+  695: true,  // Unreal Trials
 };
-export const syncLevelOfJobLevels = { 50: 130, 60: 270, 70: 400, 80: 530, 90: 660 };
+export const syncLevelOfJobLevels = { 50: 130, 60: 270, 70: 400, 80: 530, 90: 660, 100: 790 };
 
 export const bluMdmgAdditions = require('../data/out/bluMdmgAdditions').default as number[];

@@ -4,6 +4,7 @@ import * as mobxReact from 'mobx-react-lite';
 import * as classNames from 'classnames';
 import { Button } from '@rmwc/button';
 import { TextField } from '@rmwc/textfield';
+import { Badge } from '@rmwc/badge';
 import * as G from '../game';
 import { useStore } from './components/contexts';
 import { RippleLazy } from './components/RippleLazy';
@@ -32,8 +33,8 @@ export const Condition = mobxReact.observer(() => {
       {welcoming && (
         <a
           className={classNames('condition_tip', store.promotion.get('legacyLink') && '-highlight')}
-          href="./shb/"
-          children="此工具已适配至《晓月之终途》资料片，如需使用《暗影之逆焰》版本请点击此处"
+          href="./ew/"
+          children="此工具已适配至《金曦之遗辉》资料片，如需使用《晓月之终途》版本请点击此处"
           onClick={store.promotion.get('legacyLink') ? () => store.promotion.off('legacyLink') : undefined}
           onMouseLeave={store.promotion.get('legacyLink') ? () => store.promotion.off('legacyLink') : undefined}
         />
@@ -51,6 +52,9 @@ export const Condition = mobxReact.observer(() => {
           popper={() => (
             <div className="job-select-panel card">
               <JobSelector />
+              <div className="job-select-panel_tip">
+                中键点击职业（或右键菜单-在新标签页中打开链接）可新建一份空白配装
+              </div>
             </div>
           )}
           placement="bottom-start"
@@ -120,7 +124,13 @@ export const Condition = mobxReact.observer(() => {
       {(editing || viewing) && (
         <Dropdown
           label={({ ref, toggle }) => (
-            <Button ref={ref} className="condition_button" onClick={toggle}>魔晶石</Button>
+            <Button ref={ref} className="condition_button badge-button" onClick={toggle}>
+              魔晶石
+              <Badge
+                className="badge-button_badge"
+                exited={store.isViewing || !store.promotion.get('materiaDetDhtOptimization')}
+              />
+            </Button>
           )}
           popper={MateriaOverallPanel}
           placement="bottom-start"
@@ -159,13 +169,11 @@ export const Condition = mobxReact.observer(() => {
             className="condition_button"
             onClick={() => {
               store.startEditing();
-              // TODO: recheck behavior
               window.history.pushState(null, document.title, window.location.href.replace(/\?.*$/, ''));
             }}
             children="编辑"
           />
         )}
-        {/* <Button className="condition_button">历史记录</Button> */}
         {(editing || viewing) && (
           <Dropdown
             label={({ ref, toggle }) => (
