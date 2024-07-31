@@ -8261,6 +8261,8 @@ export default [
       DLY: 2240,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42871,
@@ -8282,6 +8284,8 @@ export default [
       DLY: 2560,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42872,
@@ -8303,6 +8307,8 @@ export default [
       DLY: 3360,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42873,
@@ -8324,6 +8330,8 @@ export default [
       DLY: 2800,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42874,
@@ -8345,6 +8353,8 @@ export default [
       DLY: 3040,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42875,
@@ -8365,6 +8375,8 @@ export default [
       MDMG: 141,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42876,
@@ -8385,6 +8397,8 @@ export default [
       MDMG: 141,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42877,
@@ -8405,6 +8419,8 @@ export default [
       MDMG: 141,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42878,
@@ -8425,6 +8441,8 @@ export default [
       MDMG: 141,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42879,
@@ -8446,6 +8464,8 @@ export default [
       DLY: 2560,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42880,
@@ -8467,6 +8487,8 @@ export default [
       DLY: 2960,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42881,
@@ -8488,6 +8510,8 @@ export default [
       DLY: 2640,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42882,
@@ -8508,6 +8532,8 @@ export default [
       MDMG: 141,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42883,
@@ -8529,6 +8555,8 @@ export default [
       DLY: 2640,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42884,
@@ -8549,6 +8577,8 @@ export default [
       MDMG: 141,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42885,
@@ -8570,6 +8600,8 @@ export default [
       DLY: 2800,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42886,
@@ -8591,6 +8623,8 @@ export default [
       DLY: 3120,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42887,
@@ -8612,6 +8646,8 @@ export default [
       DLY: 3200,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42888,
@@ -8632,6 +8668,8 @@ export default [
       MDMG: 141,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42889,
@@ -8653,6 +8691,8 @@ export default [
       DLY: 2640,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42890,
@@ -8673,6 +8713,8 @@ export default [
       MDMG: 141,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42891,
@@ -8691,6 +8733,8 @@ export default [
       DET: 106,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42892,
@@ -8710,6 +8754,8 @@ export default [
       DET: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42893,
@@ -8729,6 +8775,8 @@ export default [
       CRT: 357,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42894,
@@ -8748,6 +8796,8 @@ export default [
       DET: 225,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42895,
@@ -8767,6 +8817,8 @@ export default [
       DET: 357,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42896,
@@ -8786,6 +8838,8 @@ export default [
       CRT: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42897,
@@ -8805,6 +8859,8 @@ export default [
       CRT: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42898,
@@ -8824,6 +8880,8 @@ export default [
       DET: 357,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42899,
@@ -8843,6 +8901,8 @@ export default [
       SKS: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42900,
@@ -8862,6 +8922,8 @@ export default [
       DET: 250,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42901,
@@ -8881,6 +8943,8 @@ export default [
       DET: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42902,
@@ -8900,6 +8964,8 @@ export default [
       DET: 225,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42903,
@@ -8919,6 +8985,8 @@ export default [
       CRT: 357,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42904,
@@ -8938,6 +9006,8 @@ export default [
       DET: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42905,
@@ -8957,6 +9027,8 @@ export default [
       DET: 357,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42906,
@@ -8976,6 +9048,8 @@ export default [
       CRT: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42907,
@@ -8995,6 +9069,8 @@ export default [
       DET: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42908,
@@ -9014,6 +9090,8 @@ export default [
       CRT: 357,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42909,
@@ -9033,6 +9111,8 @@ export default [
       DET: 225,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42910,
@@ -9052,6 +9132,8 @@ export default [
       DET: 357,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42911,
@@ -9071,6 +9153,8 @@ export default [
       CRT: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42912,
@@ -9090,6 +9174,8 @@ export default [
       DET: 225,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42913,
@@ -9109,6 +9195,8 @@ export default [
       DET: 250,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42914,
@@ -9128,6 +9216,8 @@ export default [
       DET: 225,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42915,
@@ -9147,6 +9237,8 @@ export default [
       CRT: 250,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42916,
@@ -9166,6 +9258,8 @@ export default [
       DET: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42917,
@@ -9185,6 +9279,8 @@ export default [
       SPS: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42918,
@@ -9204,6 +9300,8 @@ export default [
       DET: 250,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42919,
@@ -9223,6 +9321,8 @@ export default [
       DET: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42920,
@@ -9242,6 +9342,8 @@ export default [
       DET: 357,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42921,
@@ -9261,6 +9363,8 @@ export default [
       CRT: 225,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42922,
@@ -9280,6 +9384,8 @@ export default [
       CRT: 225,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42923,
@@ -9299,6 +9405,8 @@ export default [
       DET: 357,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42924,
@@ -9318,6 +9426,8 @@ export default [
       DET: 158,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42925,
@@ -9337,6 +9447,8 @@ export default [
       DET: 250,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42926,
@@ -9356,6 +9468,8 @@ export default [
       SPS: 225,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42927,
@@ -9375,6 +9489,8 @@ export default [
       DET: 177,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42928,
@@ -9394,6 +9510,8 @@ export default [
       DET: 177,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42929,
@@ -9413,6 +9531,8 @@ export default [
       SKS: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42930,
@@ -9432,6 +9552,8 @@ export default [
       DET: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42931,
@@ -9451,6 +9573,8 @@ export default [
       SPS: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42932,
@@ -9470,6 +9594,8 @@ export default [
       DET: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42933,
@@ -9489,6 +9615,8 @@ export default [
       SKS: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42934,
@@ -9508,6 +9636,8 @@ export default [
       DET: 177,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42935,
@@ -9527,6 +9657,8 @@ export default [
       CRT: 177,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42936,
@@ -9546,6 +9678,8 @@ export default [
       CRT: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42937,
@@ -9565,6 +9699,8 @@ export default [
       DET: 177,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42938,
@@ -9584,6 +9720,8 @@ export default [
       DET: 177,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42939,
@@ -9603,6 +9741,8 @@ export default [
       DET: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42940,
@@ -9622,6 +9762,8 @@ export default [
       SPS: 177,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42941,
@@ -9641,6 +9783,8 @@ export default [
       DET: 177,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42942,
@@ -9660,6 +9804,8 @@ export default [
       DET: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42943,
@@ -9679,6 +9825,8 @@ export default [
       CRT: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42944,
@@ -9698,6 +9846,8 @@ export default [
       DET: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42945,
@@ -9717,6 +9867,8 @@ export default [
       DET: 177,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 42946,
@@ -9736,6 +9888,8 @@ export default [
       DET: 124,
     },
     hq: true,
+    source: '生产制作',
+    patch: '7.05',
   },
   {
     id: 43946,
@@ -9754,6 +9908,8 @@ export default [
       CRT: 357,
     },
     hq: true,
+    source: '天书奇谈',
+    patch: '7.05',
   },
   {
     id: 43947,
@@ -9772,6 +9928,8 @@ export default [
       DET: 357,
     },
     hq: true,
+    source: '天书奇谈',
+    patch: '7.05',
   },
   {
     id: 43948,
@@ -9790,6 +9948,8 @@ export default [
       CRT: 357,
     },
     hq: true,
+    source: '天书奇谈',
+    patch: '7.05',
   },
   {
     id: 43949,
@@ -9808,6 +9968,8 @@ export default [
       CRT: 357,
     },
     hq: true,
+    source: '天书奇谈',
+    patch: '7.05',
   },
   {
     id: 43950,
@@ -9826,6 +9988,8 @@ export default [
       DET: 250,
     },
     hq: true,
+    source: '天书奇谈',
+    patch: '7.05',
   },
   {
     id: 43951,
@@ -9844,6 +10008,8 @@ export default [
       DET: 250,
     },
     hq: true,
+    source: '天书奇谈',
+    patch: '7.05',
   },
   {
     id: 43952,
@@ -9862,6 +10028,8 @@ export default [
       DET: 357,
     },
     hq: true,
+    source: '天书奇谈',
+    patch: '7.05',
   },
   {
     id: 42947,
@@ -9881,6 +10049,8 @@ export default [
       PDMG: 143,
       DLY: 2240,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42948,
@@ -9900,6 +10070,8 @@ export default [
       PDMG: 143,
       DLY: 2560,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42949,
@@ -9919,6 +10091,8 @@ export default [
       PDMG: 143,
       DLY: 3360,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42950,
@@ -9938,6 +10112,8 @@ export default [
       PDMG: 143,
       DLY: 2800,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42951,
@@ -9957,6 +10133,8 @@ export default [
       PDMG: 143,
       DLY: 3040,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42952,
@@ -9975,6 +10153,8 @@ export default [
       DET: 266,
       MDMG: 143,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42953,
@@ -9993,6 +10173,8 @@ export default [
       SPS: 380,
       MDMG: 143,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42954,
@@ -10011,6 +10193,8 @@ export default [
       CRT: 266,
       MDMG: 143,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42955,
@@ -10029,6 +10213,8 @@ export default [
       DET: 266,
       MDMG: 143,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42956,
@@ -10048,6 +10234,8 @@ export default [
       PDMG: 143,
       DLY: 2560,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42957,
@@ -10067,6 +10255,8 @@ export default [
       PDMG: 143,
       DLY: 2960,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42958,
@@ -10086,6 +10276,8 @@ export default [
       PDMG: 143,
       DLY: 2640,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42959,
@@ -10104,6 +10296,8 @@ export default [
       DET: 266,
       MDMG: 143,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42960,
@@ -10123,6 +10317,8 @@ export default [
       PDMG: 143,
       DLY: 2640,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42961,
@@ -10141,6 +10337,8 @@ export default [
       CRT: 266,
       MDMG: 143,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42962,
@@ -10160,6 +10358,8 @@ export default [
       PDMG: 143,
       DLY: 2800,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42963,
@@ -10179,6 +10379,8 @@ export default [
       PDMG: 143,
       DLY: 3120,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42964,
@@ -10198,6 +10400,8 @@ export default [
       PDMG: 143,
       DLY: 3200,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42965,
@@ -10216,6 +10420,8 @@ export default [
       DET: 266,
       MDMG: 143,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42966,
@@ -10235,6 +10441,8 @@ export default [
       PDMG: 143,
       DLY: 2640,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42967,
@@ -10253,6 +10461,8 @@ export default [
       CRT: 266,
       MDMG: 143,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42968,
@@ -10270,6 +10480,8 @@ export default [
       CRT: 76,
       DET: 109,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42969,
@@ -10287,6 +10499,8 @@ export default [
       TEN: 162,
       DET: 231,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42970,
@@ -10304,6 +10518,8 @@ export default [
       TEN: 256,
       CRT: 366,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42971,
@@ -10321,6 +10537,8 @@ export default [
       CRT: 231,
       SKS: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42972,
@@ -10338,6 +10556,8 @@ export default [
       TEN: 366,
       DET: 256,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42973,
@@ -10355,6 +10575,8 @@ export default [
       CRT: 231,
       DET: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42974,
@@ -10372,6 +10594,8 @@ export default [
       DHT: 162,
       CRT: 231,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42975,
@@ -10389,6 +10613,8 @@ export default [
       DHT: 256,
       DET: 366,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42976,
@@ -10406,6 +10632,8 @@ export default [
       CRT: 231,
       DET: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42977,
@@ -10423,6 +10651,8 @@ export default [
       DHT: 256,
       CRT: 366,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42978,
@@ -10440,6 +10670,8 @@ export default [
       DHT: 231,
       SKS: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42979,
@@ -10457,6 +10689,8 @@ export default [
       DHT: 231,
       CRT: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42980,
@@ -10474,6 +10708,8 @@ export default [
       CRT: 366,
       DET: 256,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42981,
@@ -10491,6 +10727,8 @@ export default [
       CRT: 231,
       SKS: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42982,
@@ -10508,6 +10746,8 @@ export default [
       DHT: 366,
       DET: 256,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42983,
@@ -10525,6 +10765,8 @@ export default [
       DET: 231,
       SKS: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42984,
@@ -10542,6 +10784,8 @@ export default [
       CRT: 162,
       SKS: 231,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42985,
@@ -10559,6 +10803,8 @@ export default [
       DHT: 256,
       CRT: 366,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42986,
@@ -10576,6 +10822,8 @@ export default [
       CRT: 231,
       DET: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42987,
@@ -10593,6 +10841,8 @@ export default [
       DHT: 256,
       DET: 366,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42988,
@@ -10610,6 +10860,8 @@ export default [
       DHT: 231,
       DET: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42989,
@@ -10627,6 +10879,8 @@ export default [
       DHT: 162,
       DET: 231,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42990,
@@ -10644,6 +10898,8 @@ export default [
       CRT: 366,
       SKS: 256,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42991,
@@ -10661,6 +10917,8 @@ export default [
       DHT: 231,
       CRT: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42992,
@@ -10678,6 +10936,8 @@ export default [
       CRT: 256,
       DET: 366,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42993,
@@ -10695,6 +10955,8 @@ export default [
       DET: 231,
       SKS: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42994,
@@ -10712,6 +10974,8 @@ export default [
       CRT: 162,
       DET: 231,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42995,
@@ -10729,6 +10993,8 @@ export default [
       CRT: 256,
       SPS: 366,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42996,
@@ -10746,6 +11012,8 @@ export default [
       PIE: 231,
       SPS: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42997,
@@ -10763,6 +11031,8 @@ export default [
       CRT: 366,
       DET: 256,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42998,
@@ -10780,6 +11050,8 @@ export default [
       PIE: 231,
       CRT: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 42999,
@@ -10797,6 +11069,8 @@ export default [
       CRT: 231,
       DET: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43000,
@@ -10814,6 +11088,8 @@ export default [
       DET: 256,
       SPS: 366,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43001,
@@ -10831,6 +11107,8 @@ export default [
       DHT: 162,
       DET: 231,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43002,
@@ -10848,6 +11126,8 @@ export default [
       DHT: 366,
       CRT: 256,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43003,
@@ -10865,6 +11145,8 @@ export default [
       DET: 231,
       SPS: 162,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43004,
@@ -10882,6 +11164,8 @@ export default [
       CRT: 127,
       DET: 182,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43005,
@@ -10899,6 +11183,8 @@ export default [
       DET: 182,
       SKS: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43006,
@@ -10916,6 +11202,8 @@ export default [
       CRT: 127,
       DET: 182,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43007,
@@ -10933,6 +11221,8 @@ export default [
       PIE: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43008,
@@ -10950,6 +11240,8 @@ export default [
       DET: 127,
       SPS: 182,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43009,
@@ -10967,6 +11259,8 @@ export default [
       TEN: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43010,
@@ -10984,6 +11278,8 @@ export default [
       DHT: 127,
       CRT: 182,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43011,
@@ -11001,6 +11297,8 @@ export default [
       DHT: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43012,
@@ -11018,6 +11316,8 @@ export default [
       CRT: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43013,
@@ -11035,6 +11335,8 @@ export default [
       DHT: 127,
       CRT: 182,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43014,
@@ -11052,6 +11354,8 @@ export default [
       CRT: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43015,
@@ -11069,6 +11373,8 @@ export default [
       DET: 127,
       SKS: 182,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43016,
@@ -11086,6 +11392,8 @@ export default [
       CRT: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43017,
@@ -11103,6 +11411,8 @@ export default [
       PIE: 127,
       DET: 182,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43018,
@@ -11120,6 +11430,8 @@ export default [
       DHT: 127,
       SPS: 182,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43019,
@@ -11137,6 +11449,8 @@ export default [
       CRT: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43020,
@@ -11154,6 +11468,8 @@ export default [
       DHT: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43021,
@@ -11171,6 +11487,8 @@ export default [
       CRT: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43022,
@@ -11188,6 +11506,8 @@ export default [
       PIE: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43023,
@@ -11205,6 +11525,8 @@ export default [
       CRT: 182,
       DET: 127,
     },
+    source: '点数/天道',
+    patch: '7.05',
   },
   {
     id: 43024,
@@ -11224,6 +11546,8 @@ export default [
       PDMG: 145,
       DLY: 2240,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43025,
@@ -11243,6 +11567,8 @@ export default [
       PDMG: 145,
       DLY: 2560,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43026,
@@ -11262,6 +11588,8 @@ export default [
       PDMG: 145,
       DLY: 3360,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43027,
@@ -11281,6 +11609,8 @@ export default [
       PDMG: 145,
       DLY: 2800,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43028,
@@ -11300,6 +11630,8 @@ export default [
       PDMG: 145,
       DLY: 3040,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43029,
@@ -11318,6 +11650,8 @@ export default [
       DET: 272,
       MDMG: 145,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43030,
@@ -11336,6 +11670,8 @@ export default [
       SPS: 388,
       MDMG: 145,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43031,
@@ -11354,6 +11690,8 @@ export default [
       CRT: 272,
       MDMG: 145,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43032,
@@ -11372,6 +11710,8 @@ export default [
       DET: 272,
       MDMG: 145,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43033,
@@ -11391,6 +11731,8 @@ export default [
       PDMG: 145,
       DLY: 2560,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43034,
@@ -11410,6 +11752,8 @@ export default [
       PDMG: 145,
       DLY: 2960,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43035,
@@ -11429,6 +11773,8 @@ export default [
       PDMG: 145,
       DLY: 2640,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43036,
@@ -11447,6 +11793,8 @@ export default [
       DET: 272,
       MDMG: 145,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43037,
@@ -11466,6 +11814,8 @@ export default [
       PDMG: 145,
       DLY: 2640,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43038,
@@ -11484,6 +11834,8 @@ export default [
       CRT: 272,
       MDMG: 145,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43039,
@@ -11503,6 +11855,8 @@ export default [
       PDMG: 145,
       DLY: 2800,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43040,
@@ -11522,6 +11876,8 @@ export default [
       PDMG: 145,
       DLY: 3120,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43041,
@@ -11541,6 +11897,8 @@ export default [
       PDMG: 145,
       DLY: 3200,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43042,
@@ -11559,6 +11917,8 @@ export default [
       DET: 272,
       MDMG: 145,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43043,
@@ -11578,6 +11938,8 @@ export default [
       PDMG: 145,
       DLY: 2640,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43044,
@@ -11596,6 +11958,8 @@ export default [
       CRT: 272,
       MDMG: 145,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43045,
@@ -11613,6 +11977,8 @@ export default [
       CRT: 78,
       DET: 111,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43046,
@@ -11630,6 +11996,8 @@ export default [
       TEN: 165,
       DET: 236,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43047,
@@ -11647,6 +12015,8 @@ export default [
       TEN: 262,
       CRT: 374,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43048,
@@ -11664,6 +12034,8 @@ export default [
       CRT: 236,
       SKS: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43049,
@@ -11681,6 +12053,8 @@ export default [
       TEN: 374,
       DET: 262,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43050,
@@ -11698,6 +12072,8 @@ export default [
       CRT: 236,
       DET: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43051,
@@ -11715,6 +12091,8 @@ export default [
       DHT: 165,
       CRT: 236,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43052,
@@ -11732,6 +12110,8 @@ export default [
       DHT: 262,
       DET: 374,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43053,
@@ -11749,6 +12129,8 @@ export default [
       CRT: 236,
       DET: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43054,
@@ -11766,6 +12148,8 @@ export default [
       DHT: 262,
       CRT: 374,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43055,
@@ -11783,6 +12167,8 @@ export default [
       DHT: 236,
       SKS: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43056,
@@ -11800,6 +12186,8 @@ export default [
       DHT: 236,
       CRT: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43057,
@@ -11817,6 +12205,8 @@ export default [
       CRT: 374,
       DET: 262,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43058,
@@ -11834,6 +12224,8 @@ export default [
       CRT: 236,
       SKS: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43059,
@@ -11851,6 +12243,8 @@ export default [
       DHT: 374,
       DET: 262,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43060,
@@ -11868,6 +12262,8 @@ export default [
       DET: 236,
       SKS: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43061,
@@ -11885,6 +12281,8 @@ export default [
       CRT: 165,
       SKS: 236,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43062,
@@ -11902,6 +12300,8 @@ export default [
       DHT: 262,
       CRT: 374,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43063,
@@ -11919,6 +12319,8 @@ export default [
       CRT: 236,
       DET: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43064,
@@ -11936,6 +12338,8 @@ export default [
       DHT: 262,
       DET: 374,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43065,
@@ -11953,6 +12357,8 @@ export default [
       DHT: 236,
       DET: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43066,
@@ -11970,6 +12376,8 @@ export default [
       DHT: 165,
       DET: 236,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43067,
@@ -11987,6 +12395,8 @@ export default [
       CRT: 374,
       SKS: 262,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43068,
@@ -12004,6 +12414,8 @@ export default [
       DHT: 236,
       CRT: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43069,
@@ -12021,6 +12433,8 @@ export default [
       CRT: 262,
       DET: 374,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43070,
@@ -12038,6 +12452,8 @@ export default [
       DET: 236,
       SKS: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43071,
@@ -12055,6 +12471,8 @@ export default [
       CRT: 165,
       DET: 236,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43072,
@@ -12072,6 +12490,8 @@ export default [
       CRT: 262,
       SPS: 374,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43073,
@@ -12089,6 +12509,8 @@ export default [
       PIE: 236,
       SPS: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43074,
@@ -12106,6 +12528,8 @@ export default [
       CRT: 374,
       DET: 262,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43075,
@@ -12123,6 +12547,8 @@ export default [
       PIE: 236,
       CRT: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43076,
@@ -12140,6 +12566,8 @@ export default [
       CRT: 236,
       DET: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43077,
@@ -12157,6 +12585,8 @@ export default [
       DET: 262,
       SPS: 374,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43078,
@@ -12174,6 +12604,8 @@ export default [
       DHT: 165,
       DET: 236,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43079,
@@ -12191,6 +12623,8 @@ export default [
       DHT: 374,
       CRT: 262,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43080,
@@ -12208,6 +12642,8 @@ export default [
       DET: 236,
       SPS: 165,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43081,
@@ -12225,6 +12661,8 @@ export default [
       CRT: 130,
       DET: 186,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43082,
@@ -12242,6 +12680,8 @@ export default [
       DET: 186,
       SKS: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43083,
@@ -12259,6 +12699,8 @@ export default [
       CRT: 130,
       DET: 186,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43084,
@@ -12276,6 +12718,8 @@ export default [
       PIE: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43085,
@@ -12293,6 +12737,8 @@ export default [
       DET: 130,
       SPS: 186,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43086,
@@ -12310,6 +12756,8 @@ export default [
       TEN: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43087,
@@ -12327,6 +12775,8 @@ export default [
       DHT: 130,
       CRT: 186,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43088,
@@ -12344,6 +12794,8 @@ export default [
       DHT: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43089,
@@ -12361,6 +12813,8 @@ export default [
       CRT: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43090,
@@ -12378,6 +12832,8 @@ export default [
       DHT: 130,
       CRT: 186,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43091,
@@ -12395,6 +12851,8 @@ export default [
       CRT: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43092,
@@ -12412,6 +12870,8 @@ export default [
       DET: 130,
       SKS: 186,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43093,
@@ -12429,6 +12889,8 @@ export default [
       CRT: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43094,
@@ -12446,6 +12908,8 @@ export default [
       PIE: 130,
       DET: 186,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43095,
@@ -12463,6 +12927,8 @@ export default [
       DHT: 130,
       SPS: 186,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43096,
@@ -12480,6 +12946,8 @@ export default [
       CRT: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43097,
@@ -12497,6 +12965,8 @@ export default [
       DHT: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43098,
@@ -12514,6 +12984,8 @@ export default [
       CRT: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43099,
@@ -12531,6 +13003,8 @@ export default [
       PIE: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43100,
@@ -12548,6 +13022,8 @@ export default [
       CRT: 186,
       DET: 130,
     },
+    source: '点数强化/天道',
+    patch: '7.05',
   },
   {
     id: 43123,
@@ -12565,6 +13041,8 @@ export default [
       CRT: 236,
       DET: 165,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43124,
@@ -12582,6 +13060,8 @@ export default [
       TEN: 374,
       DET: 262,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43125,
@@ -12599,6 +13079,8 @@ export default [
       CRT: 165,
       DET: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43126,
@@ -12616,6 +13098,8 @@ export default [
       CRT: 262,
       DET: 374,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43127,
@@ -12633,6 +13117,8 @@ export default [
       TEN: 236,
       CRT: 165,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43128,
@@ -12650,6 +13136,8 @@ export default [
       DHT: 236,
       DET: 165,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43129,
@@ -12667,6 +13155,8 @@ export default [
       CRT: 374,
       DET: 262,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43130,
@@ -12684,6 +13174,8 @@ export default [
       CRT: 165,
       SKS: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43131,
@@ -12701,6 +13193,8 @@ export default [
       DHT: 374,
       DET: 262,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43132,
@@ -12718,6 +13212,8 @@ export default [
       CRT: 236,
       DET: 165,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43133,
@@ -12735,6 +13231,8 @@ export default [
       DHT: 165,
       DET: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43134,
@@ -12752,6 +13250,8 @@ export default [
       CRT: 262,
       SKS: 374,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43135,
@@ -12769,6 +13269,8 @@ export default [
       DHT: 165,
       DET: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43136,
@@ -12786,6 +13288,8 @@ export default [
       DHT: 262,
       CRT: 374,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43137,
@@ -12803,6 +13307,8 @@ export default [
       CRT: 236,
       DET: 165,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43138,
@@ -12820,6 +13326,8 @@ export default [
       DHT: 165,
       CRT: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43139,
@@ -12837,6 +13345,8 @@ export default [
       DHT: 374,
       DET: 262,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43140,
@@ -12854,6 +13364,8 @@ export default [
       DET: 236,
       SKS: 165,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43141,
@@ -12871,6 +13383,8 @@ export default [
       DHT: 374,
       CRT: 262,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43142,
@@ -12888,6 +13402,8 @@ export default [
       CRT: 165,
       DET: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43143,
@@ -12905,6 +13421,8 @@ export default [
       DHT: 165,
       CRT: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43144,
@@ -12922,6 +13440,8 @@ export default [
       CRT: 262,
       DET: 374,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43145,
@@ -12939,6 +13459,8 @@ export default [
       DHT: 165,
       DET: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43146,
@@ -12956,6 +13478,8 @@ export default [
       DHT: 374,
       SKS: 262,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43147,
@@ -12973,6 +13497,8 @@ export default [
       CRT: 236,
       DET: 165,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43148,
@@ -12990,6 +13516,8 @@ export default [
       PIE: 236,
       DET: 165,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43149,
@@ -13007,6 +13535,8 @@ export default [
       CRT: 374,
       DET: 262,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43150,
@@ -13024,6 +13554,8 @@ export default [
       PIE: 165,
       CRT: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43151,
@@ -13041,6 +13573,8 @@ export default [
       PIE: 374,
       CRT: 262,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43152,
@@ -13058,6 +13592,8 @@ export default [
       PIE: 165,
       DET: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43153,
@@ -13075,6 +13611,8 @@ export default [
       DHT: 165,
       SPS: 236,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43154,
@@ -13092,6 +13630,8 @@ export default [
       DHT: 262,
       CRT: 374,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43155,
@@ -13109,6 +13649,8 @@ export default [
       CRT: 236,
       SPS: 165,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43156,
@@ -13126,6 +13668,8 @@ export default [
       DHT: 262,
       SPS: 374,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43157,
@@ -13143,6 +13687,8 @@ export default [
       CRT: 236,
       DET: 165,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43158,
@@ -13160,6 +13706,8 @@ export default [
       CRT: 186,
       SKS: 130,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43159,
@@ -13177,6 +13725,8 @@ export default [
       DHT: 186,
       DET: 130,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43160,
@@ -13194,6 +13744,8 @@ export default [
       CRT: 130,
       SKS: 186,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43161,
@@ -13211,6 +13763,8 @@ export default [
       CRT: 130,
       DET: 186,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43162,
@@ -13228,6 +13782,8 @@ export default [
       CRT: 130,
       DET: 186,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43163,
@@ -13245,6 +13801,8 @@ export default [
       CRT: 186,
       DET: 130,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43164,
@@ -13262,6 +13820,8 @@ export default [
       DHT: 130,
       DET: 186,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43165,
@@ -13279,6 +13839,8 @@ export default [
       DHT: 130,
       CRT: 186,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43166,
@@ -13296,6 +13858,8 @@ export default [
       DET: 186,
       SPS: 130,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43167,
@@ -13313,6 +13877,8 @@ export default [
       DET: 130,
       SPS: 186,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43168,
@@ -13330,6 +13896,8 @@ export default [
       TEN: 186,
       CRT: 130,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43169,
@@ -13347,6 +13915,8 @@ export default [
       DHT: 130,
       CRT: 186,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43170,
@@ -13364,6 +13934,8 @@ export default [
       DET: 186,
       SKS: 130,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43171,
@@ -13381,6 +13953,8 @@ export default [
       CRT: 186,
       DET: 130,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43172,
@@ -13398,6 +13972,8 @@ export default [
       DHT: 186,
       CRT: 130,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43173,
@@ -13415,6 +13991,8 @@ export default [
       TEN: 186,
       CRT: 130,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43174,
@@ -13432,6 +14010,8 @@ export default [
       CRT: 130,
       DET: 186,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43175,
@@ -13449,6 +14029,8 @@ export default [
       DHT: 130,
       DET: 186,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43176,
@@ -13466,6 +14048,8 @@ export default [
       CRT: 130,
       DET: 186,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43177,
@@ -13483,6 +14067,8 @@ export default [
       DHT: 186,
       CRT: 130,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43101,
@@ -13502,6 +14088,8 @@ export default [
       PDMG: 146,
       DLY: 2240,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43102,
@@ -13521,6 +14109,8 @@ export default [
       PDMG: 146,
       DLY: 2560,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43103,
@@ -13540,6 +14130,8 @@ export default [
       PDMG: 146,
       DLY: 3360,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43104,
@@ -13559,6 +14151,8 @@ export default [
       PDMG: 146,
       DLY: 2800,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43105,
@@ -13578,6 +14172,8 @@ export default [
       PDMG: 146,
       DLY: 3040,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43106,
@@ -13596,6 +14192,8 @@ export default [
       DET: 393,
       MDMG: 146,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43107,
@@ -13614,6 +14212,8 @@ export default [
       SPS: 275,
       MDMG: 146,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43108,
@@ -13632,6 +14232,8 @@ export default [
       DET: 275,
       MDMG: 146,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43109,
@@ -13650,6 +14252,8 @@ export default [
       DET: 393,
       MDMG: 146,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43110,
@@ -13669,6 +14273,8 @@ export default [
       PDMG: 146,
       DLY: 2560,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43111,
@@ -13688,6 +14294,8 @@ export default [
       PDMG: 146,
       DLY: 2960,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43112,
@@ -13707,6 +14315,8 @@ export default [
       PDMG: 146,
       DLY: 2640,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43113,
@@ -13725,6 +14335,8 @@ export default [
       DET: 393,
       MDMG: 146,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43114,
@@ -13744,6 +14356,8 @@ export default [
       PDMG: 146,
       DLY: 2640,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43115,
@@ -13762,6 +14376,8 @@ export default [
       DET: 275,
       MDMG: 146,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43116,
@@ -13781,6 +14397,8 @@ export default [
       PDMG: 146,
       DLY: 2800,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43117,
@@ -13800,6 +14418,8 @@ export default [
       PDMG: 146,
       DLY: 3120,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43118,
@@ -13819,6 +14439,8 @@ export default [
       PDMG: 146,
       DLY: 3200,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43119,
@@ -13837,6 +14459,8 @@ export default [
       DET: 393,
       MDMG: 146,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43120,
@@ -13856,6 +14480,8 @@ export default [
       PDMG: 146,
       DLY: 2640,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43121,
@@ -13874,6 +14500,8 @@ export default [
       DET: 275,
       MDMG: 146,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
   {
     id: 43122,
@@ -13891,5 +14519,7 @@ export default [
       CRT: 112,
       DET: 78,
     },
+    source: '零式/轻重量级',
+    patch: '7.05',
   },
 ];

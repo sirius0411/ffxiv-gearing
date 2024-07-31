@@ -6631,6 +6631,7 @@ export default [
       DET: 10,
     },
     statMain: 'DHT',
+    patch: '7.05',
     best: true,
   },
   {
@@ -6650,6 +6651,7 @@ export default [
       DHT: 10,
     },
     statMain: 'SKS',
+    patch: '7.05',
     best: true,
   },
   {
@@ -6669,6 +6671,7 @@ export default [
       SKS: 10,
     },
     statMain: 'CRT',
+    patch: '7.05',
     best: true,
   },
   {
@@ -6688,6 +6691,7 @@ export default [
       CRT: 10,
     },
     statMain: 'DET',
+    patch: '7.05',
     best: true,
   },
   {
@@ -6707,6 +6711,7 @@ export default [
       DET: 10,
     },
     statMain: 'PIE',
+    patch: '7.05',
     best: true,
   },
   {
@@ -6726,6 +6731,7 @@ export default [
       PIE: 10,
     },
     statMain: 'SPS',
+    patch: '7.05',
     best: true,
   },
   {
@@ -6745,6 +6751,7 @@ export default [
       DHT: 10,
     },
     statMain: 'SPS',
+    patch: '7.05',
     best: true,
   },
   {
@@ -6764,6 +6771,7 @@ export default [
       SPS: 10,
     },
     statMain: 'CRT',
+    patch: '7.05',
     best: true,
   },
   {
@@ -6783,6 +6791,7 @@ export default [
       DET: 10,
     },
     statMain: 'TEN',
+    patch: '7.05',
     best: true,
   },
   {
@@ -6802,6 +6811,7 @@ export default [
       TEN: 10,
     },
     statMain: 'DET',
+    patch: '7.05',
     best: true,
   },
 ];
