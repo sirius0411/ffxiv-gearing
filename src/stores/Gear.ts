@@ -1,7 +1,8 @@
 import * as mobx from 'mobx';
 import * as mst from 'mobx-state-tree';
 import * as G from '../game';
-import { ISetting, Materia, Store, gearData } from '.';
+import { Materia, Store, gearData } from '.';
+import type { IStore } from '.';
 
 export type GearColor = 'white' | 'red' | 'green' | 'blue' | 'purple';
 
@@ -16,6 +17,9 @@ export const Gear = mst.types
       if (!gearData.has(Math.abs(self.id))) throw ReferenceError(`Gear ${self.id} not exists.`);
       return gearData.get(Math.abs(self.id))! as G.Gear;
     },
+    get store(): IStore {
+      return mst.getParentOfType(self, Store);
+    },
   }))
   .views(self => ({
     get isFood(): false { return false; },
@@ -24,6 +28,7 @@ export const Gear = mst.types
     get slot() { return self.id > 0 ? self.data.slot : -self.data.slot; },
     get jobs() { return G.jobCategories[self.data.jobCategory]; },
     get equipLevel() { return self.data.equipLevel; },
+    get equipLevelVariable() { return self.data.equipLevelVariable; },
     get materiaSlot() { return self.data.materiaSlot; },
     get materiaAdvanced() { return self.data.materiaAdvanced; },
     get hq() { return self.data.hq; },
@@ -31,17 +36,18 @@ export const Gear = mst.types
     get source() { return self.data.source; },
     get patch() { return self.data.patch; },
     get color(): GearColor {
-      const { gearColorScheme } = mst.getEnv(self).setting as ISetting;
+      const { gearColorScheme } = self.store.setting;
       if (gearColorScheme === 'none') return 'white';
       const { rarity, source='' } = self.data;
       return gearColorScheme === 'source' && sourceColors[(source).slice(0, 2)] || rarityColors[rarity];
     },
     get syncedLevel(): number | undefined {
-      let { jobLevel, syncLevel } = mst.getParentOfType(self, Store);
-      if (jobLevel < this.equipLevel && !(syncLevel! < G.syncLevelOfJobLevels[jobLevel])) {
-        syncLevel = G.syncLevelOfJobLevels[jobLevel];
-      }
-      return syncLevel! < this.level ? syncLevel : undefined;
+      const { jobLevel, syncLevel=Infinity } = self.store;
+      if (syncLevel >= this.level && jobLevel >= this.equipLevel) return undefined;
+      const jobLevelSyncedLevel = Math.min(this.level, G.syncLevelOfJobLevels[jobLevel]);
+      return this.equipLevelVariable
+        ? Math.min(syncLevel, jobLevelSyncedLevel)
+        : syncLevel < this.level ? syncLevel : jobLevelSyncedLevel;
     },
     get caps(): G.Stats { return G.getCaps(self.data); },
     get bareStats(): G.Stats { return self.data.stats; },
@@ -101,8 +107,7 @@ export const Gear = mst.types
       return !(this.patch > G.patches.current);
     },
     get isEquipped(): boolean {
-      const store = mst.getParentOfType(self, Store);
-      return store.equippedGears.get(this.slot.toString()) === self;
+      return self.store.equippedGears.get(this.slot.toString()) === self;
     },
     get isMelded(): boolean {
       for (const materia of self.materias) {
@@ -124,7 +129,7 @@ export const Gear = mst.types
     initialize() {
       const materiaSlot = self.materiaAdvanced ? 5 : self.materiaSlot;
       if (self.materias.length > materiaSlot) {
-        self.materias.splice(0, materiaSlot, 5);  // 5 means all
+        self.materias.splice(materiaSlot, 5);  // 5 means all
       }
       if (self.materias.length < materiaSlot) {
         self.materias.push(...new Array(materiaSlot - self.materias.length).fill({}));

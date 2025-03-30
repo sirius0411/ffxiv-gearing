@@ -70,6 +70,10 @@
       for (const food of state.food.listResult) {
         foodIdToItemId[food.id] = food.item;
       }
+      const medicineIdToItemId = {};
+      for (const medicine of state.medicine.listResult) {
+        medicineIdToItemId[medicine.id] = medicine.item;
+      }
       for (const [ slot, gear ] of Object.entries(state.gearsets.gearset)) {
         if (!gear) continue;
         let { id } = gear;
@@ -87,6 +91,7 @@
         }
         if (id) {
           if (slot === 'food') id = foodIdToItemId[id];
+          if (slot === 'medicine') id = medicineIdToItemId[id];
           let materiaKey = id;
           if (slot === 'fingerL') materiaKey += 'L';
           if (slot === 'fingerR') materiaKey += 'R';
@@ -160,9 +165,17 @@
       for (const item of Object.values(currentGearSet.equipment)) {
         if (!item) continue;
         const { id } = item.gearItem;
-        const materias = item.melds.filter(Boolean).map(({ equippedMateria }) =>
+        const materias = item.melds.map(({ equippedMateria }) => equippedMateria &&
           [materiaTypes[equippedMateria.primaryStat], equippedMateria.materiaGrade]);
-        data.gears.push({ id, materias });
+        let customStats;
+        if (item.relicStats) {
+          customStats = {};
+          for (const [ stat, value ] of Object.entries(item.relicStats)) {
+            if (!value) continue;
+            customStats[materiaTypes[stat]] = value;
+          }
+        }
+        data.gears.push({ id, materias, customStats });
       }
       if (currentGearSet.food) {
         data.gears.push({ id: currentGearSet.food.id, materias: [] });
@@ -170,9 +183,10 @@
       data.job = currentSheet.classJobName;
       data.jobLevel = currentSheet.level;
       data.syncLevel = currentSheet.ilvlSync;
+      if (data.syncLevel === 665) data.syncLevel = undefined;  // prefer job level sync in this case
     }
 
-  } catch (e) { debugger; }  // eslint-disable-line no-debugger
+  } catch (e) { debugger; }  // eslint-disable-line no-debugger, @typescript-eslint/no-unused-vars
 
   if (data.job !== null) {
     const importUrl = origin + '?import-' + encodeURIComponent(JSON.stringify(data));

@@ -2,10 +2,12 @@ import * as mobx from 'mobx';
 import * as mst from 'mobx-state-tree';
 import * as G from '../game';
 import * as share from '../share';
-import { floor, ceil, ISetting, Promotion, IGear, IFood, GearUnion, IGearUnion, GearUnionReference,
-  gearDataOrdered, gearDataLoading, loadGearDataOfGearId, loadGearDataOfLevelRange, IMateria } from '.';
+import { floor, ceil, Setting, Promotion, GearUnion, GearUnionReference,
+  gearDataOrdered, gearDataLoading, loadGearDataOfGearId, loadGearDataOfLevelRange } from '.';
+import type { IGear, IFood, IGearUnion, IMateria } from '.';
 
-const globalClanKey = 'ffxiv-gearing.dt.clan';
+const clanStorageKey = 'ffxiv-gearing.dt.clan';
+const tiersShownStorageKey = 'ffxiv-gearing.dt.tiers-shown';
 
 export type Mode = 'edit' | 'view';
 
@@ -23,6 +25,7 @@ export const Store = mst.types
     filterPatch: mst.types.optional(mst.types.string as mst.ISimpleType<FilterPatch>, 'all'),
     filterFocus: mst.types.optional(mst.types.string as mst.ISimpleType<FilterFocus>, 'no'),
     showAllFoods: mst.types.optional(mst.types.boolean, false),
+    showAllPotions: mst.types.optional(mst.types.boolean, false),
     duplicateToolMateria: mst.types.optional(mst.types.boolean, true),
     gears: mst.types.map(GearUnion),
     equippedGears: mst.types.map(GearUnionReference),
@@ -33,15 +36,14 @@ export const Store = mst.types
     // bisUseOrnate: mst.types.optional(mst.types.boolean, false),
   })
   .volatile(() => ({
+    setting: Setting.create(),
     promotion: Promotion.create(),
-    clan: Number(localStorage.getItem(globalClanKey)) || 0,
+    clan: Number(localStorage.getItem(clanStorageKey)) || 0,
+    tiersShown: localStorage.getItem(tiersShownStorageKey) === 'true',
     autoSelectScheduled: false,
     materiaOverallActiveTab: 0,
   }))
   .views(self => ({
-    get setting(): ISetting {
-      return mst.getEnv(self).setting;
-    },
     get filteredIds(): G.GearId[] {
       console.debug('filteredIds');
       if (self.job === undefined) return [];
@@ -57,9 +59,9 @@ export const Store = mst.types
           (filterPatch === 'all' ||
             filterPatch === 'next' && !(gear.patch! > G.patches.next) ||
             filterPatch === 'current' && !(gear.patch! > G.patches.current)) &&
-          (gear.slot === -1
-            ? (self.showAllFoods || 'best' in gear) // Foods
-            : gear.slot === 17 || (gear.slot === 2 && job === 'FSH') ||  // Soul crystal and spearfishing gig
+          (gear.slot === -1 ? (self.showAllFoods || 'best' in gear) :  // Foods
+            gear.slot === -2 ? (self.showAllPotions || 'best' in gear) :  // Potions
+              gear.slot === 17 || (gear.slot === 2 && job === 'FSH') ||  // Soul crystal and spearfishing gig
               (gear.level >= minLevel && gear.level <= maxLevel &&
                 !(gear.obsolete && this.setting.hideObsoleteGears))
           )
@@ -96,7 +98,10 @@ export const Store = mst.types
       const ret: { [index: number]: IGearUnion[] } = {};
       for (const gearId of self.filteredIds) {
         const gear = self.gears.get(gearId.toString())!;
-        if (self.filterFocus !== 'no' && !gear.isFood && !gear.isMelded) continue;
+        if (!gear.isFood && !gear.isMelded) {
+          if (self.filterFocus === 'melded' && !gear.isEquipped) continue;
+          if (self.filterFocus === 'comparable') continue;
+        }
         if (!(gear.slot in ret)) {
           ret[gear.slot] = [];
         }
@@ -135,11 +140,13 @@ export const Store = mst.types
     get equippedStats(): G.Stats {
       console.debug('equippedStats');
       if (self.job === undefined) return {};
-      const equippedFood = self.equippedGears.get('-1') as IFood;
-      if (equippedFood === undefined) return this.equippedStatsWithoutFood;
-      const stats: G.Stats = {};
-      for (const stat of Object.keys(this.equippedStatsWithoutFood) as G.Stat[]) {
-        stats[stat] = this.equippedStatsWithoutFood[stat] + (equippedFood.effectiveStats[stat] ?? 0);
+      const stats = { ...this.equippedStatsWithoutFood };
+      for (const slot of ['-1', '-2']) {
+        const equippedFood = self.equippedGears.get(slot) as IFood;
+        if (equippedFood === undefined) continue;
+        for (const stat of Object.keys(this.equippedStatsWithoutFood) as G.Stat[]) {
+          stats[stat] += equippedFood.effectiveStats[stat] ?? 0;
+        }
       }
       return stats;
     },
@@ -215,17 +222,21 @@ export const Store = mst.types
             consumptionItem!.confidence90 = consumptionItem!.confidence99 = consumptionItem!.safe;
             continue;
           }
-          const ps: number[][] = [];  // ps[n][i]: success rate of using n materias to meld slots p[i..]
+          const pp: number[][] = p.map(pi => [1, 1 - pi]);  // pp[i][j] = (1 - p[i]) ** j, for caching
+          const ps: Float64Array[] = [];  // ps[n][i]: success rate of using n materias to meld slots p[i..]
           let n = 1;
           let n90 = 0;
           while (true) {
-            ps[n] = [];
-            ps[n][p.length - 1] = 1 - (1 - p[p.length - 1]) ** n;
+            for (let i = 0; i < p.length; i++) {
+              pp[i][n] = pp[i][n - 1] * pp[i][1];
+            }
+            ps[n] = new Float64Array(p.length);
+            ps[n][p.length - 1] = 1 - pp[p.length - 1][n];
             for (let i = p.length - 2; i >= 0; i--) {
               if (p.length - i > n) break;
               ps[n][i] = 0;
               for (let j = 1; j <= n - (p.length - i) + 1; j++) {
-                ps[n][i] += (1 - p[i]) ** (j - 1) * p[i] * ps[n - j][i + 1];
+                ps[n][i] += pp[i][j - 1] * p[i] * ps[n - j][i + 1];
               }
             }
             if (ps[n][0] > p90 && n90 === 0) n90 = n;
@@ -272,6 +283,7 @@ export const Store = mst.types
   .views(self => ({
     get equippedEffects() {
       console.debug('equippedEffects');
+      if (self.job === undefined) return;
       const { statModifiers, mainStat, traitDamageMultiplier, partyBonus } = self.schema;
       if (statModifiers === undefined || mainStat === undefined || traitDamageMultiplier === undefined) return;
       const levelMod = G.jobLevelModifiers[self.jobLevel];
@@ -284,6 +296,7 @@ export const Store = mst.types
       const detDamage = floor((140 * (DET! - main) / det + 1000) / detTrunc) * detTrunc / 1000;
       const dhtChance = floor(550 * (DHT! - sub) / div + bluAetherialMimicry) / 1000;
       const tenDamage = floor(112 * ((TEN ?? sub) - sub) / div + 1000) / 1000;
+      const tenMitigation = floor(200 * ((TEN ?? sub) - sub) / div) / 1000;
       const weaponDamage = floor(main * statModifiers[attackMainStat]! / 1000) +
         ((mainStat === 'MND' || mainStat === 'INT' ? MDMG : PDMG) ?? 0) +
         (self.job === 'BLU' ? G.bluMdmgAdditions[self.equippedStats['INT']! - self.baseStats['INT']!] ?? 0 : 0);
@@ -297,7 +310,7 @@ export const Store = mst.types
       const hp = levelMod.hp * statModifiers.hp +
         floor((mainStat === 'VIT' ? levelMod.vitTank : levelMod.vit) * (VIT! - main));
       const mp = floor(150 * ((PIE ?? main) - main) / div + 200);
-      return { crtChance, crtDamage, detDamage, dhtChance, tenDamage, damage, gcd, ssDamage, hp, mp };
+      return { crtChance, crtDamage, detDamage, dhtChance, tenDamage, tenMitigation, damage, gcd, ssDamage, hp, mp };
     },
     get equippedTiers(): { [index in G.Stat]?: { prev: number, next: number } } | undefined {
       const { statModifiers } = self.schema;
@@ -610,10 +623,10 @@ export const Store = mst.types
     get shareUrl(): string {
       return window.location.origin + window.location.pathname + '?' + this.share;
     },
-    get title(): string {
+    get title(): string | undefined {
       const suffix = '最终幻想14配装器';
       if (self.job === undefined) return suffix;
-      if (self.isLoading) return `${self.schema.name} - ${suffix}`;
+      if (self.isLoading) return undefined;
       const glance = self.schema.mainStat !== undefined
         ? `il${self.equippedLevel}/${this.equippedEffects.gcd.toFixed(2)}s`
         : self.schema.stats.map(s => self.equippedStats[s]).join('/');
@@ -685,6 +698,9 @@ export const Store = mst.types
     toggleShowAllFoods(): void {
       self.showAllFoods = !self.showAllFoods;
     },
+    toggleShowAllPotions(): void {
+      self.showAllPotions = !self.showAllPotions;
+    },
     toggleDuplicateToolMateria(): void {
       self.duplicateToolMateria = !self.duplicateToolMateria;
     },
@@ -712,12 +728,17 @@ export const Store = mst.types
     },
     setClan(clan: number): void {
       self.clan = clan;
-      localStorage.setItem(globalClanKey, clan.toString());
+      localStorage.setItem(clanStorageKey, clan.toString());
+    },
+    toggleTiersShown(): void {
+      self.tiersShown = !self.tiersShown;
+      localStorage.setItem(tiersShownStorageKey, self.tiersShown.toString());
     },
     autoSelect(): void {
       if (!self.autoSelectScheduled) return;
       self.autoSelectScheduled = false;
-      for (const gears of Object.values(self.groupedGears)) {
+      for (const [ slot, gears ] of Object.entries(self.groupedGears)) {
+        if (self.equippedGears.get(slot) !== undefined) continue;
         let lastMeldable = gears[gears.length - 1];
         if (lastMeldable === undefined || lastMeldable.isFood || lastMeldable.slot === 17) continue;
         for (let i = gears.length - 1; i >= 0; i--) {

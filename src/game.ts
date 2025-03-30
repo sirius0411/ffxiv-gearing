@@ -15,6 +15,7 @@ export interface Gear extends GearBase {
   rawSlot?: number,
   role: number,
   equipLevel: number,
+  equipLevelVariable?: true,
   materiaSlot: number,
   materiaAdvanced?: true,
   hq?: true,
@@ -144,7 +145,7 @@ const slotSchemaCommon: SlotSchema[] = [
   { slot: 11, name: '手镯', uiGroup: 'right' },
   { slot: 12, name: '戒指', uiGroup: 'right' },
   { slot: -12, name: '戒指', uiGroup: 'right' },
-  { slot: -1, name: '食物', levelWeight: 0, uiGroup: 'misc' },
+  { slot: -1, name: '食品', levelWeight: 0, uiGroup: 'misc' },
 ];
 const slotSchemaCombat = [
   { slot: 13, name: '武器', levelWeight: 2, uiGroup: 'weapon' },
@@ -159,10 +160,11 @@ const slotSchemaCrafting = [
   ...slotSchemaGathering.slice(0, -1),
   { slot: 17, name: '灵魂水晶', shortName: '水晶', levelWeight: 0, uiGroup: 'misc' },
   slotSchemaGathering[slotSchemaGathering.length - 1],
+  { slot: -2, name: '药品', levelWeight: 0, uiGroup: 'misc' },
 ];
 
-const defaultItemLevelCombat = [690, 735];
-const defaultItemLevelCrafting = [690, 700];
+const defaultItemLevelCombat = [720, 765];
+const defaultItemLevelCrafting = [690, 720];
 const defaultItemLevelGathering = defaultItemLevelCrafting;
 
 export interface JobSchema {
@@ -339,7 +341,7 @@ export const jobSchemas = {
     traitDamageMultiplier: 1,
   } as JobSchema,
   VPR: {
-    name: 'Viper',
+    name: '蝰蛇剑士',
     stats: statSchemas.dpsDex,
     slots: slotSchemaCombat,
     defaultItemLevel: defaultItemLevelCombat,
@@ -619,7 +621,7 @@ export const clanStats: { [index in Stat]?: number[] } = {
 export const syncLevels = require('../data/out/syncLevels').default as { [index in JobLevel]: number[] };
 export const syncLevelIsPopular: { [index: number]: boolean } = {
   300: true,  // Eureka
-  345: true, 375: true, 475: true, 605: true, 635: true,  // Ultimate Raids
+  345: true, 375: true, 475: true, 605: true, 635: true, 735: true,  // Ultimate Raids
   695: true,  // Unreal Trials
 };
 export const syncLevelOfJobLevels = { 50: 130, 60: 270, 70: 400, 80: 530, 90: 660, 100: 790 };

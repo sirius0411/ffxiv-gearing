@@ -13,7 +13,7 @@ export const FilterPanel = mobxReact.observer(() => {
       </div>
       <div className="filter_controls">
         <Radio
-          label={`显示全部`}
+          label="显示全部"
           checked={store.filterPatch === 'all'}
           onChange={() => store.setFilterPatch('all')}
         />
@@ -22,11 +22,11 @@ export const FilterPanel = mobxReact.observer(() => {
           checked={store.filterPatch === 'next'}
           onChange={() => store.setFilterPatch('next')}
         />
-        {/* FIXME <Radio
+        <Radio
           label={`只显示国服已实装的项目（≤${G.patches.current}）`}
           checked={store.filterPatch === 'current'}
           onChange={() => store.setFilterPatch('current')}
-        /> */}
+        />
       </div>
       <div className="filter_section">
         <span className="filter_title">“聚焦”模式</span>
@@ -39,7 +39,7 @@ export const FilterPanel = mobxReact.observer(() => {
           onChange={() => store.setFilterFocus('no')}
         />
         <Radio
-          label="只显示镶嵌了魔晶石的装备"
+          label="只显示镶嵌了魔晶石的装备和已选中的装备"
           checked={store.filterFocus === 'melded'}
           onChange={() => store.setFilterFocus('melded')}
         />

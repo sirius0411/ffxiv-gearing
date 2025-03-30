@@ -1,12 +1,14 @@
 import * as mst from 'mobx-state-tree';
-import { Gear, IGear, Food, IFood, gearData } from '.';
+import { Gear, Food, gearData } from '.';
+import type { IGear, IFood } from '.';
 
 export const GearUnion = mst.types.union({
   dispatcher: snapshot => {
     const gear = gearData.get(Math.abs(snapshot.id));
     if (gear !== undefined) {
-      if (snapshot.materias !== undefined && gear.slot === -1) delete snapshot.materias;
-      return gear.slot !== -1 ? Gear : Food;
+      const isFood = gear.slot === -1 || gear.slot === -2;
+      if (snapshot.materias !== undefined && isFood) delete snapshot.materias;
+      return !isFood ? Gear : Food;
     } else {
       return snapshot.materias !== undefined ? Gear : Food;
     }

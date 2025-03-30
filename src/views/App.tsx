@@ -1,6 +1,6 @@
 import * as mobxReact from 'mobx-react-lite';
-import * as classNames from 'classnames';
-import { IStore } from '../stores';
+import classNames from 'clsx';
+import type { IStore } from '../stores';
 import { StoreContext } from './components/contexts';
 import { Slot } from './Slot';
 import { SlotCompact } from './SlotCompact';
@@ -24,6 +24,7 @@ export const App = mobxReact.observer<{ store: IStore }>(({ store }) => {
         )}
         {store.job !== undefined && <Summary />}
         <About />
+        {store.tiersShown && !store.isViewing && store.equippedEffects && <div className="summary_tiers-spacer" />}
         <div id="popper" />
       </div>
     </StoreContext.Provider>

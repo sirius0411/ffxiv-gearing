@@ -15,8 +15,9 @@ function loadExd(filename) {
   return data.slice(3, -1).map(line => {
     const ret = {};
     for (let i = 0; i < line.length; i++) {
-      if (fields[i] in ret) console.log(fields[i]);
-      ret[fields[i] || i] = line[i];
+      if (fields[i] !== '') {
+        ret[fields[i]] = line[i];
+      }
       ret[i] = line[i];
     }
     return ret;
@@ -42,9 +43,9 @@ const jobs = [
 ];
 
 const patches = {
-  data: '7.05',  // 主数据的版本，即国际服游戏版本
-  next: '7.0',  // 对国服来说，下一个有装备更新的版本
-  current: '6.99',  // 国服当前游戏版本
+  data: '7.2',  // 主数据的版本，即国际服游戏版本
+  next: '7.15',  // 对国服来说，下一个有装备更新的版本
+  current: '7.11',  // 国服当前游戏版本
 };
 
 const sourceOfId = {};
@@ -145,6 +146,8 @@ const gears = Item
     ret.role = Number(x['BaseParamModifier']);
     ret.jobCategory = Number(x['ClassJobCategory']);
     ret.equipLevel = Number(x['Level{Equip}']);
+    ret.equipLevelVariable = x['Description'] === 'IL and attributes synced to current job level.'
+      ? true : undefined;  // FIXME: 是否有更标识字段的判定方式
     ret.materiaSlot = Number(x['MateriaSlotCount']);
     ret.materiaAdvanced = x['IsAdvancedMeldingPermitted'] === 'True' ? true : undefined;
     ret.stats = {};
@@ -228,14 +231,17 @@ const jobCategoryMap = Object.fromEntries(jobCategoriesUsed
 const foods = Item
   .map((x, index) => {
     const itemAction = ItemAction[x['ItemAction']];
-    if ((itemAction['Type'] !== '844' && itemAction['Type'] !== '845') || x['CanBeHq'] !== 'True') return;
+    const actionType = Number(itemAction['Type']);
+    const isFood = actionType === 844 || actionType === 845;  // 844=战斗食物, 845=生产采集食物
+    const isPotion = actionType === 846;  // 846=加属性值的药水
+    if (!(isFood || isPotion) || x['CanBeHq'] !== 'True') return;
     const itemFood = ItemFood[itemAction['Data[1]']];
 
     const ret = {};
     ret.id = Number(x['#']);
     ret.name = ItemCn[index]?.['Name'] || x['Name'];
     ret.level = Number(x['Level{Item}']);
-    ret.slot = -1;
+    ret.slot = isFood ? -1 : -2;
     ret.jobCategory = undefined;
     ret.stats = {};
     ret.statRates = {};
@@ -260,6 +266,8 @@ const foods = Item
     const jobs = {};
     if ('CMS' in ret.stats || 'CRL' in ret.stats || 'CP' in ret.stats) {
       ['CRP', 'BSM', 'ARM', 'GSM', 'LTW', 'WVR', 'ALC', 'CUL'].forEach(j => jobs[j] = true);
+    } else {
+      if (isPotion) return;
     }
     if ('GTH' in ret.stats || 'PCP' in ret.stats || 'GP' in ret.stats) {
       ['MIN', 'BTN', 'FSH'].forEach(j => jobs[j] = true);
@@ -292,7 +300,7 @@ const foods = Item
 const bestFoods = [];
 for (const food of foods.slice().reverse()) {
   if (food.id === 4745) continue;  // 唯一的直击信仰食物，各只加1，应该并不会有人想吃它
-  if (food.patch > '7.0' /* patches.current */) {  // 不强制显示7.0版本的新食物和7.0之前的国服已实装范围内的最优食物
+  if (food.patch > patches.current) {
     food.best = true;
     continue;
   }
@@ -321,21 +329,21 @@ for (const l of Object.keys(syncLevelOfJobLevel).map(x => Number(x)).sort((a, b)
 }
 
 const levelCaps = {
-  level: Object.keys(levelsUsed).map(x => parseInt(x, 10)).sort((a, b) => a - b),
+  level: Object.keys(levelsUsed).map(x => Number(x)).sort((a, b) => a - b),
 };
 for (const i of Object.keys(statAbbrs)) {
-  levelCaps[statAbbrs[i]] = levelCaps.level.map(l => parseInt(ItemLevel[l][i], 10));
+  levelCaps[statAbbrs[i]] = levelCaps.level.map(l => Number(ItemLevel[l][i]));
 }
 
 delete slotsUsed[0];
 const slotCaps = {};
 for (const i of Object.keys(statAbbrs)) {
-  slotCaps[statAbbrs[i]] = Array.from(slotsUsed).map((_, j) => _ ? parseInt(BaseParam[i][4 + j], 10) : 0);
+  slotCaps[statAbbrs[i]] = Array.from(slotsUsed).map((_, j) => _ ? Number(BaseParam[i][4 + j]) : 0);
 }
 
 const roleCaps = {};
 for (const i of Object.keys(statAbbrs)) {
-  roleCaps[statAbbrs[i]] = Array.from({ length: 13 }).map((_, j) => parseInt(BaseParam[i][27 + j], 10));
+  roleCaps[statAbbrs[i]] = Array.from({ length: 13 }).map((_, j) => Number(BaseParam[i][27 + j]));
 }
 
 const levelGroupBasis = [
@@ -368,7 +376,7 @@ for (const gear of gears) {
 }
 
 const bluMdmgAdditions = fs.readFileSync('./in/bluMdmgAdditions.txt', 'utf8')
-  .split(/\r?\n/).map(x => parseInt(x, 10)).filter(x => !Number.isNaN(x));
+  .trim().split(/\r?\n/).map(Number);
 
 for (const filename of fs.readdirSync('./out')) {
   fs.unlinkSync(`./out/${filename}`);
