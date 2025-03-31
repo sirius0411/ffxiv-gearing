@@ -10,7 +10,7 @@ import { TextField } from '@rmwc/textfield';
 import { List, ListItem } from '@rmwc/list';
 import { Radio } from '@rmwc/radio';
 import { Button } from '@rmwc/button';
-import { DropdownPopperProps } from './components/Dropdown';
+import type { DropdownPopperProps } from './components/Dropdown';
 
 const GCD_MIN = 150
 const GCD_MAX = 250
