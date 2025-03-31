@@ -1,6 +1,7 @@
 const fs = require('fs');
 const rspack = require('@rspack/core');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const path = require('path');
 
 // require('browserslist')() can't match lightningcss built-in browserslist-rs
 const targets = fs.readFileSync('./.browserslistrc', 'utf8').split(/\r?\n/).filter(Boolean);
@@ -26,6 +27,7 @@ module.exports = function (env, argv) {
       },
     },
     output: {
+      path: path.resolve(__dirname, 'dist'),
       filename: prod ? '[name].[contenthash].js' : '[name].bundle.js',
       chunkFilename: prod ? '[name].[contenthash].js' : '[name].bundle.js',
       hashDigestLength: 10,
